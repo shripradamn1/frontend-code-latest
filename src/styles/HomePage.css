@@ -1,0 +1,191 @@
+.homepage-container {
+   margin-top: 10px;
+    font-family: Georgia, serif;
+    position: relative; 
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    height: 90vh;
+  }
+  
+  .left, .right {
+    width: 48%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .left {
+    background-color: #FDF068;
+    color: black;
+  }
+  
+  .right {
+    background-color: #C4F3CA;
+    color: black;
+  }
+  
+  h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+  }
+  
+  ul li {
+    margin: 10px 0;
+  }
+  
+  ul li::before {
+    content: "✔";
+    margin-right: 10px;
+    color: green;
+  }
+  
+  .illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .illustration img {
+    width: 250px;
+    height: 350px;
+  }
+  
+  /* Existing styles */
+  .ticket-management-section {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .features-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature-item {
+    background-color: #bfeef1;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-item:hover {
+    transform: scale(1.1);
+  }
+  
+  .feature-item a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .help-navigation-section {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  .help-options {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .help-option {
+    background-color: #bfe0f1;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    
+  }
+  
+  .help-option:hover {
+    transform: scale(1.1);
+    
+  }
+  
+  .help-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .help-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+    color: #FDF068;
+  }
+  /* Styling for header and auth buttons */
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    background-color: #e1d8d8;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .sign-in, .sign-up {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+  }
+  
+  .sign-in {
+    background-color: #007bff;
+  }
+  
+  .sign-up {
+    background-color: #28a745;
+  }
+  
+  .sign-in:hover {
+    background-color: #0056b3;
+  }
+  
+  .sign-up:hover {
+    background-color: #218838;
+  }
+  
+  /* Rest of the existing styles */
+  .homepage-container {
+    padding: 10px;
+    font-family: Georgia, serif;
+    position: relative; 
+  }
+  
+  /* Other styles like .ticket-management-section, .features-list, etc. remain unchanged */
+  
