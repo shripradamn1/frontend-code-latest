@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles/HomePage.css';
 import backgroundImage from './Images/ticketing-system-illustra.png';
 
 const HomePage = () => {
+  const [showSignInModal, setShowSignInModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+  // Function to handle modal close
+  const closeModal = () => {
+    setShowSignInModal(false);
+    setShowSignUpModal(false);
+  };
+
   return (
     <div className="homepage-container">
       {/* Header Section with Sign Up and Sign In */}
       <div className="header">
         <div className="auth-buttons">
-          <button className="sign-in">Sign In</button>
-          <button className="sign-up">Sign Up</button>
+          <button className="sign-in" onClick={() => setShowSignInModal(true)}>Sign In</button>
+          <button className="sign-up" onClick={() => setShowSignUpModal(true)}>Sign Up</button>
         </div>
+      </div>
+
+      {/* Main Hero Section */}
+      <div className="hero-section">
+        <h1>Omnichannel Support Ticketing System</h1>
+        <p>
+          Easy and user-friendly features set Zoho Desk apart as one of the best online
+          ticketing systems available. Take a 15-day free trial of the industry's leading
+          ticketing system software!
+        </p>
+        <button className="get-started-button" onClick={() => setShowSignInModal(true)}>Get Started</button>
       </div>
 
       {/* New section with image on the left and boxes on the right */}
@@ -22,10 +42,7 @@ const HomePage = () => {
         </div>
         <div className="right">
           {/* Ticketing System Heading */}
-          <div className="ticket-management-section">
-            <span className="heading">TICKET MANAGEMENT</span>
-            <h2>Manage tickets and everything else in one place</h2>
-          </div>
+          <div className="ticket-management-section"></div>
 
           {/* Information Section */}
           <h1>What is a Ticketing System?</h1>
@@ -95,6 +112,43 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <p>© 2024 Ticketing System. All rights reserved.</p>
+        <div className="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </footer>
+
+      {/* Sign In Modal */}
+      {showSignInModal && (
+        <div className="modal" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <span className="close" onClick={closeModal}>&times;</span>
+            <h2>Sign In</h2>
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button className="submit-button">Sign In</button>
+          </div>
+        </div>
+      )}
+
+      {/* Sign Up Modal */}
+      {showSignUpModal && (
+        <div className="modal" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <span className="close" onClick={closeModal}>&times;</span>
+            <h2>Sign Up</h2>
+            <input type="text" placeholder="Username" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button className="submit-button">Sign Up</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
