@@ -26,7 +26,7 @@ const Features = () => {
       {showFeatures && (
         <>
           <h2 className="features-title">Explore More Features</h2>
-          <p className="features-subtitle">Here are the additional features to look at</p>
+         
           <div className="features-grid">
             {featuresData.map((feature, index) => (
               <div key={index} className="feature-card">

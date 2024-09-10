@@ -6,7 +6,6 @@ import backgroundImage from './Images/image.png';
 import Features from './Features';
 
 const HomePage = () => {
-  const [showSignInModal, setShowSignInModal] = useState(false);
   const [signUpData, setSignUpData] = useState({ username: '', email: '', password: '' });
 
   const navigate = useNavigate(); // Initialize useNavigate hook
@@ -16,10 +15,6 @@ const HomePage = () => {
 
   const scrollToFeatures = () => {
     featuresRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const closeModal = () => {
-    setShowSignInModal(false);
   };
 
   // Handle input changes for the sign-up form
@@ -37,7 +32,7 @@ const HomePage = () => {
 
       if (response.status === 200) {
         // If sign up is successful, navigate to the 'signin/user' page
-        navigate('/signin/user');
+        navigate('/');
       } else {
         console.error('Sign-up failed');
       }
@@ -57,7 +52,7 @@ const HomePage = () => {
           {/* Add navigation links here */}
         </nav>
         <div className="auth-buttons">
-          <button className="sign-in" onClick={() => setShowSignInModal(true)}>Sign In</button>
+          <button className="sign-in" onClick={() => navigate('/login')}>Sign In</button>
           <button className="sign-up" onClick={() => navigate('/signup/user')}>Sign Up</button> 
         </div>
       </div>
@@ -70,7 +65,7 @@ const HomePage = () => {
           <p>
             Help your customer service staff in prioritizing, categorizing, assigning, and managing agents with real-time tracking of the tickets received.
           </p>
-          <button className="get-started-button" onClick={() => navigate('/signup/user')}>Get Started</button> {/* Navigate to sign-up page */}
+          <button className="get-started-button" onClick={() => navigate('/features')}>Get Started</button> {/* Navigate to sign-up page */}
         </div>
         <div className="hero-image">
           <img src={backgroundImage} alt="Ticketing System Illustration" />
@@ -91,19 +86,6 @@ const HomePage = () => {
           <a href="#">Contact Us</a>
         </div>
       </footer>
-
-      {/* Sign In Modal */}
-      {showSignInModal && (
-        <div className="modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close" onClick={closeModal}>&times;</span>
-            <h2>Sign In</h2>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button className="submit-button">Sign In</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
