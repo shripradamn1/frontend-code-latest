@@ -1,121 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
+import axios from 'axios';
 import './styles/HomePage.css';
-import backgroundImage from './Images/ticketing-system-illustra.png';
+import backgroundImage from './Images/image.png';
+import Features from './Features';
 
 const HomePage = () => {
   const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [signUpData, setSignUpData] = useState({ username: '', email: '', password: '' });
 
-  // Function to handle modal close
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  // Create a ref for the Features section
+  const featuresRef = useRef(null);
+
+  const scrollToFeatures = () => {
+    featuresRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const closeModal = () => {
     setShowSignInModal(false);
-    setShowSignUpModal(false);
+  };
+
+  // Handle input changes for the sign-up form
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSignUpData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  // Handle sign-up form submission
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      // Make the POST request for signup
+      const response = await axios.post('http://localhost:7000/api/signup', signUpData, { withCredentials: true });
+
+      if (response.status === 200) {
+        // If sign up is successful, navigate to the 'signin/user' page
+        navigate('/signin/user');
+      } else {
+        console.error('Sign-up failed');
+      }
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+    }
   };
 
   return (
     <div className="homepage-container">
-      {/* Header Section with Sign Up and Sign In */}
+      {/* Header Section */}
       <div className="header">
+        <div className="logo">
+          {/* Replace with actual logo */}
+        </div>
+        <nav className="nav-links">
+          {/* Add navigation links here */}
+        </nav>
         <div className="auth-buttons">
           <button className="sign-in" onClick={() => setShowSignInModal(true)}>Sign In</button>
-          <button className="sign-up" onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+          <button className="sign-up" onClick={() => navigate('/signup/user')}>Sign Up</button> 
         </div>
       </div>
 
-      {/* Main Hero Section */}
+      {/* Hero Section */}
       <div className="hero-section">
-        <h1>Omnichannel Support Ticketing System</h1>
-        <p>
-          Easy and user-friendly features set Zoho Desk apart as one of the best online
-          ticketing systems available. Take a 15-day free trial of the industry's leading
-          ticketing system software!
-        </p>
-        <button className="get-started-button" onClick={() => setShowSignInModal(true)}>Get Started</button>
-      </div>
-
-      {/* New section with image on the left and boxes on the right */}
-      <div className="container">
-        <div className="left">
-          <div className="illustration">
-            <img src={backgroundImage} alt="Ticketing System Illustration" />
-          </div>
+        <div className="hero-text">
+          <h1>Ticket Management</h1>
+          <h3>for streamlining your helpdesk</h3>
+          <p>
+            Help your customer service staff in prioritizing, categorizing, assigning, and managing agents with real-time tracking of the tickets received.
+          </p>
+          <button className="get-started-button" onClick={() => navigate('/signup/user')}>Get Started</button> {/* Navigate to sign-up page */}
         </div>
-        <div className="right">
-          {/* Ticketing System Heading */}
-          <div className="ticket-management-section"></div>
-
-          {/* Information Section */}
-          <h1>What is a Ticketing System?</h1>
-          <ul>
-            <li>A ticketing system is a software that helps organizations manage customer service and support requests.</li>
-            <li>It streamlines the communication between customers and support teams.</li>
-            <li>Enables tracking and resolving issues efficiently.</li>
-          </ul>
-
-          <h1>Why do you need a Ticketing System?</h1>
-          <ul>
-            <li>It ensures that no customer request goes unanswered.</li>
-            <li>Improves team efficiency by organizing requests and assigning them to the right people.</li>
-            <li>Enhances customer satisfaction by providing timely responses.</li>
-          </ul>
+        <div className="hero-image">
+          <img src={backgroundImage} alt="Ticketing System Illustration" />
         </div>
       </div>
 
-      {/* Existing content */}
-      <ul className="features-list">
-        <li className="feature-item">
-          <a href="/desk/multi-channel-ticketing-system.html">
-            <h3>Omnichannel</h3>
-            <p>Be available for your customers, whatever channel of communication they choose.</p>
-          </a>
-        </li>
-        <li className="feature-item">
-          <a href="/desk/multibrand-help-center.html">
-            <h3>Multi-brand Help Center</h3>
-            <p>Create a distinct self-service portal for each brand's customers.</p>
-          </a>
-        </li>
-        <li className="feature-item">
-          <a href="/desk/customer-support-email-management.html">
-            <h3>Email</h3>
-            <p>Enable simple email communication, fueled by context.</p>
-          </a>
-        </li>
-        <li className="feature-item">
-          <a href="/desk/call-center-software.html">
-            <h3>Telephony</h3>
-            <p>Here are good old phone conversations with a helping of context.</p>
-          </a>
-        </li>
-        <li className="feature-item">
-          <a href="/desk/live-chat-ticketing-software.html">
-            <h3>Live Chat</h3>
-            <p>Offer real-time chat support with our Business Messaging platform.</p>
-          </a>
-        </li>
-      </ul>
-
-      <div className="help-navigation-section">
-        <h2>Need help navigating your way?</h2>
-        <div className="help-options">
-          <div className="help-option">
-            <p>Complete self-service HR tasks and view employment summary information</p>
-            <button className="help-button">Workday</button>
-          </div>
-          <div className="help-option">
-            <p>Get help from our friendly People Solutions team</p>
-            <button className="help-button">Submit a request</button>
-          </div>
-          <div className="help-option">
-            <p>View your existing requests</p>
-            <button className="help-button">My requests</button>
-          </div>
-        </div>
+      {/* Features Section */}
+      <div ref={featuresRef}>
+        <Features />
       </div>
 
       {/* Footer */}
       <footer className="footer">
-        <p>© 2024 Ticketing System. All rights reserved.</p>
+        <p>© 2024 Support.cc. All rights reserved.</p>
         <div className="footer-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
@@ -132,20 +101,6 @@ const HomePage = () => {
             <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
             <button className="submit-button">Sign In</button>
-          </div>
-        </div>
-      )}
-
-      {/* Sign Up Modal */}
-      {showSignUpModal && (
-        <div className="modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close" onClick={closeModal}>&times;</span>
-            <h2>Sign Up</h2>
-            <input type="text" placeholder="Username" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button className="submit-button">Sign Up</button>
           </div>
         </div>
       )}

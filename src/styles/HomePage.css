@@ -1,224 +1,136 @@
 .homepage-container {
-   margin-top: 10px;
-    font-family: Georgia, serif;
-    position: relative; 
-  }
-  
-  .container {
-    display: flex;
-    justify-content: space-between;
-    height: 90vh;
-  }
-  
-  .left, .right {
-    width: 48%;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    min-height: 117vh;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px;
+    background-color: #f8f9fa;
+  }
+  
+  .hero-text {
+    flex: 1;
+  }
+  
+  .hero-text h1 {
+    font-size: 48px;
+    color: #000000;
+  }
+  
+  .hero-text h3 {
+    font-size: 24px;
+    color: #007bff;
+  }
+  
+  .hero-text p {
+    font-size: 16px;
+    color: #070707;
+    margin: 20px 0;
+  }
+  
+  .get-started-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+  }
+  
+  .hero-image {
+    flex: 1;
+    display: flex;
     justify-content: center;
+    height: 500px;
+    width: 350px;
+  }
+  
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .auth-buttons button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .footer {
+    background-color: #f1f1f1;
+    padding: 20px;
     text-align: center;
   }
   
-  .left {
-    background-color: #FDF068;
-    color: black;
+  .footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
   }
   
-  .right {
-    background-color: #a4e1ac;
-    color: black;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: left;
-  }
-  
-  ul li {
-    margin: 10px 0;
-  }
-  
-  ul li::before {
-    content: "✔";
-    margin-right: 10px;
-    color: green;
-  }
-  
-  .illustration {
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
   }
   
-  .illustration img {
-    width: 250px;
-    height: 350px;
-  }
-  
-  /* Existing styles */
-  .ticket-management-section {
+  .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
     text-align: center;
-    margin-bottom: 30px;
   }
   
-  .heading {
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .features-list {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
-  .feature-item {
-    background-color: #bfeef1;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    width: 200px;
-    text-align: center;
-    transition: transform 0.3s ease;
-  }
-  
-  .feature-item:hover {
-    transform: scale(1.1);
-  }
-  
-  .feature-item a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .help-navigation-section {
-    margin-top: 40px;
-    text-align: center;
-  }
-  
-  .help-options {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
-  .help-option {
-    background-color: #bfe0f1;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px;
-    width: 200px;
-    text-align: center;
-    transition: transform 0.3s ease;
-    
-  }
-  
-  .help-option:hover {
-    transform: scale(1.1);
-    
-  }
-  
-  .help-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.3s ease;
   }
   
-  .help-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.1);
-    color: #FDF068;
-  }
-  /* Styling for header and auth buttons */
-.header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 20px;
-    background-color: #b6cdc7;
-    border-radius: 6px;
-  }
-  
-  .auth-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .sign-in, .sign-up {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-  }
-  
-  .sign-in {
-    background-color: #007bff;
-    margin-right: 15px;
-  }
-  
-  .sign-up {
-    background-color: #28a745;
-    margin-right: 20px;
-  }
-  
-  .sign-in:hover {
-    background-color: #0056b3;
-  }
-  
-  .sign-up:hover {
-    background-color: #218838;
-  }
-  
-  /* Rest of the existing styles */
-  .homepage-container {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
     padding: 10px;
-    font-family: Georgia, serif;
-    position: relative; 
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
   }
   
- .hero-section{
-    padding:40px,40px;
-    height: 60vh;
-    text-align: center;
-    margin-top: 160px;
-    background-color: #fdfbfb;
-    
- }
- .hero-section h1{
-    font-size: 50px;
-
-     
- }
- .footer{
-    background-color:black;
-    height: 70px;
-    text-align: center;
- }
- .get-started-button{
-    height: 50px;
-    width: 100px;
-    color: black;
-    background-color: red;
-    border-color: rgb(250, 250, 250);
-    border-radius: 6px;
-    text-shadow: none;
-    box-shadow: none;
-    margin:25px;
-    
- }
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   
