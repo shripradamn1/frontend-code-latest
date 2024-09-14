@@ -1,0 +1,79 @@
+/* Basic styling for the entire body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Styling for the heading */
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Styling for the category list container */
+ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto; /* Center the list on the page */
+}
+
+/* Styling for individual category items */
+li {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between; /* Place delete button on the right */
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* Styling for the delete button */
+.delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #ff1a1a;
+}
+
+/* Styling for the form */
+form {
+  margin-top: 20px;
+  text-align: center;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}

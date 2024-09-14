@@ -24,7 +24,7 @@
     height: auto;
     object-fit: contain;
     border-radius: 35px;
-    border-style: 0 0 45px rgba(231, 81, 81, 0.1);
+    border: 0 0 45px rgba(231, 81, 81, 0.1);
 }
 
 .form-container {
@@ -42,11 +42,11 @@
     margin-right: 200px;
     margin-left: 0px;
 }
-
+/* 
 h1, h2 {
     text-align: center;
     margin-bottom: 20px;
-}
+} */ */
 
 form {
     display: flex;

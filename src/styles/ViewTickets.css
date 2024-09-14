@@ -1,0 +1,203 @@
+.view-tickets-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #f7f7f9;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+}
+.new-ticket-button {
+    background-color: #1abc9c;
+    color: #fff;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+.new-ticket-button:hover {
+    background-color: #16a085;
+    transform: translateY(-2px);
+}
+.tickets-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.tickets-heading {
+    font-size: 32px;
+    color: #2c3e50;
+    margin: 0;
+    letter-spacing: 1px;
+}
+.ticket-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+}
+.ticket-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 320px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+.ticket-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.ticket-header h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #34495e;
+    font-weight: 700;
+}
+.priority-tag {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.priority-tag.high {
+    background-color: #e74c3c; 
+    color: #fff;
+}
+
+.priority-tag.medium {
+    background-color: #f39c12; 
+    color: #fff;
+}
+
+.priority-tag.low {
+    background-color: #27ae60; /* Low priority - green */
+    color: #fff;
+}
+
+/* Ticket card content */
+.ticket-card p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 8px 0;
+}
+
+.ticket-card p strong {
+    color: #2c3e50;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .ticket-cards-container {
+        flex-direction: column;
+        align-items: center;}
+    .ticket-card {
+        width: 100%;
+        margin-bottom: 20px;
+    }}
+.selected-ticket-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.error-message {
+    color: red;
+    margin-top: 20px;
+}
+.view-ticket-details-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #e9ecef; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.ticket-details-card {
+    background-color: #ffffff; 
+    border: 1px solid #dcdcdc; 
+    border-radius: 10px;
+    padding: 30px;
+    margin: 20px 0; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.ticket-details-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
+}
+h2 {
+    font-size: 28px; 
+    color: #333; 
+    margin-bottom: 20px; 
+    text-align: center; 
+}
+p {
+    font-size: 16px; 
+    color: #555; 
+    margin: 10px 0;
+}
+p strong {
+    color: #333; 
+}
+
+@media (max-width: 768px) {
+    .view-ticket-details-container {
+        padding: 15px; 
+    }
+
+    .ticket-details-card {
+        padding: 15px; 
+    }
+    h2 {
+        font-size: 24px; 
+    }
+    p {
+        font-size: 14px; 
+    }
+}
+
+/* New CSS for side-by-side status */
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.status-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: #f7f7f9;
+    border-radius: 8px;
+    margin: 0 10px;
+}
+.status-item h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #2c3e50;
+}
+.status-item p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #7f8c8d;
+}
