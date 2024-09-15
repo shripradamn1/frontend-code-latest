@@ -17,6 +17,7 @@ import HomePageAgent from './Agent/HomePageAgent';
 import ViewAgents from './Admin/ViewAgents';
 import CategoryList from './Admin/CategoryList';
 import TeamsList from './Admin/TeamsList'
+import CreateAgent from './Admin/CreateAgent';
 
 function App() {
   return (
@@ -31,20 +32,17 @@ function App() {
           <Route path="/create-ticket" element={<CreateTicket/>} />
           <Route path="/ticket-details/:title" element={<ViewTicketDetails />} />
           <Route path="/view-tickets" element={<ViewTicketsUser/>} />
-
           <Route path="/signup/agent" element={<AgentSignUpPage />} />
           <Route path="agent/login/agent" element={<AgentLoginPage />} />
           <Route path="/view-tickets/agent" element={<ViewTickets/>} />
           <Route path="/edit-tickets/agent" element={<EditTicketsAgent/>} />
-
 
           {/* admin part */}
 
           <Route path="/viewAgents/admin" element={<ViewAgents/>} />
           <Route path="/categories/admin" element={<CategoryList/>} />
           <Route path="/teams/admin" element={<TeamsList/>} />
-
-          
+          <Route path="/CreateAgents/admin" element={<CreateAgent/>} />
         </Routes>
       </Router>
     </div>
