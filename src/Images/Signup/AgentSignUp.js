@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import 'C:/Users/e031906/Downloads/Front-end-latest/my-app/src/styles/Signup.css'
-import signupImage from 'C:/Users/e031906/Downloads/Front-end-latest/my-app/src/Images/blob.png';
+import '../../styles/Signup.css'
+import signupImage from '../blob.png';
 
 
 const AgentSignUpPage = () => {
