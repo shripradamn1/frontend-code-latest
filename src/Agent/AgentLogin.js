@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/AgentLogin.css';
-import loginImage from 'C:/Users/e031906/Downloads/Front-end-latest/my-app/src/Images/blob.png'; 
+import loginImage from '../Images/blob.png'; 
 import axios from 'axios';
 
 const LoginPage = () => {

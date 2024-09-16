@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams from React Router
 import axios from 'axios'; // Import axios for making API requests
-import '../styles/ViewTickets.css'; // Custom CSS for the ticket details
+import './ViewTickets.css'; // Custom CSS for the ticket details
 
 const ViewTicketDetails = () => {
   const { title } = useParams(); // Get the title from the URL parameters
