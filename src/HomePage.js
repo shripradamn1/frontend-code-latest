@@ -1,13 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/HomePage.css';
 import backgroundImage from './Images/image.png';
 
 const HomePage = () => {
-  const [signUpData, setSignUpData] = useState({ username: '', email: '', password: '' });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginWarning, setShowLoginWarning] = useState(false);
   const navigate = useNavigate();
-  const [showFeatures, setShowFeatures] = useState(false);
 
   const featuresData = [
     { title: 'Create Ticket', description: 'Ticket management with advanced features to help your customers tackle issues without sacrificing the time and effort of your customer service team.', route: '/create-ticket' },
@@ -16,36 +16,71 @@ const HomePage = () => {
     { title: 'Helpdesk Automation', description: 'Acknowledge and respond to your customers’ issues quickly with advanced helpdesk automation software that will impress your customers.' }
   ];
 
-  
+  // Check if the user is logged in on component mount
+  useEffect(() => {
+    const checkLoggedInStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:7000/checkLoggedInUser', {
+          withCredentials: true,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        setIsLoggedIn(response.data ? true : false); // If data exists, user is logged in
+      } catch (error) {
+        console.error('Error checking logged-in status:', error);
+        setIsLoggedIn(false);
+      }
+    };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSignUpData((prevData) => ({ ...prevData, [name]: value }));
+    checkLoggedInStatus();
+  }, []);
+
+  // Handle feature click
+  const handleFeatureClick = (route) => {
+    if (isLoggedIn) {
+      navigate(route);
+    } else {
+      setShowLoginWarning(true);
+      setTimeout(() => {
+        setShowLoginWarning(false);
+      }, 3000); // Hide the warning after 3 seconds
+    }
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  // Handle logout
+  const handleLogout = async () => {
     try {
-      const response = await axios.post('http://localhost:7000/api/signup', signUpData, { withCredentials: true });
-
-      if (response.status === 200) {
-        navigate('/');
-      } else {
-        console.error('Sign-up failed');
-      }
+      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      setIsLoggedIn(false);
+      navigate('/login'); // Redirect to login page
     } catch (error) {
-      console.error('Error during sign-up:', error);
+      console.error('Error logging out:', error);
     }
   };
 
   return (
     <div className="homepage-container">
+      {/* Display login warning if user is not logged in */}
+      {showLoginWarning && (
+        <div className="login-warning">
+          <p>Please log in to access this feature!</p>
+        </div>
+      )}
+
       <div className="header">
         <div className="logo"></div>
         <nav className="nav-links"></nav>
+
         <div className="auth-buttons">
-          <button className="sign-in" onClick={() => navigate('/login')}>Sign In</button>
-          <button className="sign-up" onClick={() => navigate('/signup/user')}>Sign Up</button>
+          {isLoggedIn ? (
+            <button className="logout" onClick={handleLogout}>Logout</button>
+          ) : (
+            <>
+              <button className="sign-in" onClick={() => navigate('/login')}>Sign In</button>
+              <button className="sign-up" onClick={() => navigate('/signup/user')}>Sign Up</button>
+            </>
+          )}
         </div>
       </div>
 
@@ -64,11 +99,11 @@ const HomePage = () => {
       </div>
 
       <section className="features-section">
-        <div className='features-container'>
+        <div className="features-container">
           <h2 className="features-title">Explore More Features</h2>
           <div className="features-grid">
             {featuresData.map((feature, index) => (
-              <div key={index} className="feature-card" onClick={() => feature.route && navigate(feature.route)}>
+              <div key={index} className="feature-card" onClick={() => handleFeatureClick(feature.route)}>
                 <h3 className="feature-title">{feature.title}</h3>
                 <p className="feature-description">{feature.description}</p>
               </div>

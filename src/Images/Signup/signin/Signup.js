@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../../../styles/Signup.css';
 
 
-import signupImage from '../../blob.pngn';
+import signupImage from '../../blob.png';
 
 
 // const[count,setCount]=useState(0)

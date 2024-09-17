@@ -4,7 +4,7 @@ import axios from 'axios';
 import styles from '../styles/HomePageAgent.css';
 import backgroundImage from '../Images/image.png';
 
-const HomePage = () => {
+const HomePageAgent = () => {
   const [signUpData, setSignUpData] = useState({ username: '', email: '', password: '' });
   const navigate = useNavigate();
   const [showFeatures, setShowFeatures] = useState(false);
@@ -85,4 +85,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePageAgent;
