@@ -18,6 +18,7 @@ import ViewAgents from './Admin/ViewAgents';
 import CategoryList from './Admin/CategoryList';
 import TeamsList from './Admin/TeamsList'
 import CreateAgent from './Admin/CreateAgent';
+import AdminLogin from './Admin/AdminLogin';
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
           <Route path="/categories/admin" element={<CategoryList/>} />
           <Route path="/teams/admin" element={<TeamsList/>} />
           <Route path="/CreateAgents/admin" element={<CreateAgent/>} />
+          <Route path="/login/admin" element={<AdminLogin/>} />
+
+
+          {/*  */}
         </Routes>
       </Router>
     </div>
