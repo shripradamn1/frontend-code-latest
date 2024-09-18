@@ -3,89 +3,103 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f7f7f7;
-  font-family: 'Arial', sans-serif;
+  background-color: #f7f9fc;
+  font-family: 'Lato', sans-serif;
+  color: #2f2f2f;
 }
 
 .app-header, .app-footer {
-  background-color: #3a3a3a;
-  color: #fff;
+  background-color: #344955;
+  color: #ffffff;
   text-align: center;
-  padding: 15px 0;
-  font-size: 1.2rem;
-  letter-spacing: 0.5px;
+  padding: 20px;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
 }
 
 .app-footer {
   margin-top: auto;
+  font-size: 1rem;
 }
 
 /* Category Section */
 .category-container {
-  padding: 40px;
+  padding: 50px 20px;
   flex-grow: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #344955;
+  font-weight: 700;
 }
 
 .category-list {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
   list-style-type: none;
   padding: 0;
-}
-
-.category-list li {
-  cursor: pointer;
+  margin: 0;
 }
 
 .category-box {
   position: relative;
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  padding: 20px;
+  border: 2px solid #e3e8ee;
+  border-radius: 12px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  flex-grow: 1;
+  max-width: 250px;
+  cursor: pointer;
+  text-align: left;
 }
 
 .category-box:hover {
-  background-color: #f0f8ff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  background-color: #f0f4f7;
+  border-color: #4a6572;
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
 }
 
 .category-name {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: #344955;
 }
 
 .hover-content {
   display: none;
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: -100%;
+  width: 200px;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 20px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  color: #fff;
+  border-radius: 12px;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  transition: opacity 0.3s ease;
 }
 
 .category-box:hover .hover-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  opacity: 1;
 }
 
 .hover-content button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #f9aa33;
+  color: #ffffff;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
@@ -93,72 +107,97 @@
 }
 
 .hover-content button:hover {
-  background-color: #0056b3;
+  background-color: #ff8c00;
+}
+
+/* Team List */
+.team-list {
+  margin-top: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.team-list li {
+  padding: 15px;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #344955;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-list li:hover {
+  background-color: #eef3f7;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Create Team Form */
 .create-team-form {
-  margin-top: 25px;
-  padding: 20px;
-  background-color: #fff;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
+  padding: 25px;
+  background-color: #ffffff;
+  border: 1px solid #e3e8ee;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .create-team-form h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #344955;
 }
 
 .create-team-form label {
   display: block;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  color: #344955;
 }
 
 .create-team-form input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-bottom: 15px;
-  transition: border 0.3s ease;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
 }
 
 .create-team-form input:focus {
-  border: 1px solid #007bff;
+  border-color: #4a6572;
+  outline: none;
 }
 
 .create-team-form button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 12px 24px;
+  font-size: 1.1rem;
   border: none;
-  border-radius: 5px;
-  background-color: #28a745;
+  border-radius: 6px;
+  background-color: #f9aa33;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .create-team-form button:hover {
-  background-color: #218838;
+  background-color: #ff8c00;
 }
 
 /* Modal Styles */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   padding-top: 60px;
 }
 
@@ -170,11 +209,12 @@
   background-color: #fff;
   margin: 5% auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ddd;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .close {
@@ -183,7 +223,7 @@
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .close:hover {
@@ -195,11 +235,34 @@
   font-size: 1.5rem;
   color: #666;
   text-align: center;
+  padding: 40px 0;
 }
 
 .error-message {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: red;
   text-align: center;
   padding: 20px;
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .category-container {
+    padding: 20px;
+  }
+
+  .category-box, .team-list li {
+    font-size: 1rem;
+    padding: 15px;
+  }
+
+  .hover-content button, .create-team-form button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
 }
