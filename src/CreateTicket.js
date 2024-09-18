@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './styles/CreateTicket.css'
- 
+import './styles/CreateTicket.css';
  
 const CreateTicket = () => {
   const [categories, setCategories] = useState([]);
@@ -11,6 +10,7 @@ const CreateTicket = () => {
   const [selectedTeam, setSelectedTeam] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [file, setFile] = useState(null); // State for file
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -42,7 +42,6 @@ const CreateTicket = () => {
         setLoggedInUserId(response.data.id);
       } catch (error) {
         console.error('Error checking logged-in user:', error);
-       
       }
     };
  
@@ -98,6 +97,10 @@ const CreateTicket = () => {
     setSelectedTeam(selectedTeamName);
   };
  
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
  
@@ -108,18 +111,18 @@ const CreateTicket = () => {
       return;
     }
  
-    const ticketData = {
-      title,
-      description,
-      categoryId: selectedCategory,
-      userId: loggedInUserId
-    };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('categoryId', selectedCategory);
+    formData.append('userId', loggedInUserId);
+    if (file) {
+      formData.append('file', file);
+    }
  
-    axios.post(`http://localhost:7000/api/tickets/${loggedInUserId}/${selectedCategory}/${teamId}`, ticketData, {
+    axios.post(`http://localhost:7000/api/tickets/${loggedInUserId}/${selectedCategory}/${teamId}`, formData, {
       withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json'
-      }
+     
     })
     .then((response) => {
       console.log('Ticket created successfully:', response.data);
@@ -129,9 +132,9 @@ const CreateTicket = () => {
       setDescription('');
       setSelectedCategory('');
       setSelectedTeam('');
+      setFile(null);
       setTeams([]);
  
-     
       navigate('/success');
     })
     .catch((error) => {
@@ -187,6 +190,13 @@ const CreateTicket = () => {
           </select>
         </div>
       )}
+ 
+      <label htmlFor="file">Attachment:</label>
+      <input
+        id="file"
+        type="file"
+        onChange={handleFileChange}
+      />
  
       <button type="submit">Create Ticket</button>
     </form>
