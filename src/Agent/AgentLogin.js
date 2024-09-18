@@ -41,7 +41,7 @@ const LoginPage = () => {
             setIsLoggedIn(true);
             setUserId(user.id);
             setUserData(user);
-            navigate('/edit-tickets');
+            navigate('/agent');
           } else {
             alert('Invalid role');
           }
