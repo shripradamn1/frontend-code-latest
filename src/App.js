@@ -33,6 +33,7 @@ function App() {
           <Route path="/create-ticket" element={<CreateTicket/>} />
           <Route path="/ticket-details/:title" element={<ViewTicketDetails />} />
           <Route path="/view-tickets" element={<ViewTicketsUser/>} />
+          <Route path="/edit-tickets" element={<EditTickets/>} />
           <Route path="/signup/agent" element={<AgentSignUpPage />} />
           <Route path="agent/login/agent" element={<AgentLoginPage />} />
           <Route path="/view-tickets/agent" element={<ViewTickets/>} />

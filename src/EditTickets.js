@@ -40,11 +40,11 @@ const EditTickets = () => {
 
   // Handle edit ticket click
   const handleEditClick = (ticket) => {
-    if (ticket.status.toLowerCase() !== 'closed') {
+    if (ticket.status.toLowerCase() === 'open') {
       setEditingTicket(ticket);
       setUpdatedDescription(ticket.description); // Set the initial description for editing
     } else {
-      alert('You cannot edit a ticket with status "Closed".');
+      alert('You can only edit tickets with status "OPEN".');
     }
   };
 
@@ -81,13 +81,12 @@ const EditTickets = () => {
             <h3>{ticket.title}</h3>
             <p>Status: {ticket.status}</p>
             <p>Description: {ticket.description}</p>
-            {/* <p>Created At: {new Date(ticket.createdAt).toLocaleString()}</p> */}
             <button
               onClick={() => handleEditClick(ticket)}
-              disabled={ticket.status.toLowerCase() === 'closed'}
+              disabled={ticket.status.toLowerCase() !== 'open'} // Disable button if status is not "OPEN"
               className="edit-button"
             >
-              Edit Description
+              Edit Information
             </button>
           </div>
         ))}

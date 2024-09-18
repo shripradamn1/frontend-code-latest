@@ -13,12 +13,13 @@ const columns = () => [
         {row.id}
       </div>
     ),
-  },{
+  },
+  {
     name: 'Title',
-    selector: row => row.name, 
+    selector: row => row.title, // Update this to row.title
     cell: row => (
       <div className="data-table-cell">
-        {row.name ? row.name : 'No Title'} 
+        {row.title ? row.title : 'No Title'} 
       </div>
     ),
   },
@@ -33,49 +34,23 @@ const columns = () => [
   },
 ];
 
-const customStyles = {
-  headCells: {
-    style: {
-      backgroundColor: '#f4f4f4',
-      fontWeight: 'bold',
-      color: '#333',
-    },
-  },
-  rows: {
-    style: {
-      backgroundColor: '#fff',
-      '&:nth-of-type(even)': {
-        backgroundColor: '#f9f9f9',
-      },
-    },
-  },
-  cells: {
-    style: {
-      padding: '10px',
-      borderBottom: '1px solid #ddd',
-    },
-  },
-};
-
+// Rendering ticket cards with the correct title field
 function ViewTickets() {
-  const [tickets, setTickets] = useState([]); // Initialize with empty array
+  const [tickets, setTickets] = useState([]); 
   const [ticketCounts, setTicketCounts] = useState({ new: 0, open: 0, pending: 0 });
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        // First check the logged-in user
-        const loginResponse = await axios.get('http://localhost:7000/checkLoggedInUser', {
-          withCredentials: true,
-        });
+        const loginResponse = await axios.get('http://localhost:7000/checkLoggedInUser', { withCredentials: true });
         if (loginResponse.status === 200) {
           const username = loginResponse.data.username;
           localStorage.setItem('username', JSON.stringify(username));
           const response = await axios.get(`http://localhost:7000/api/tickets/agent/${username}`, { withCredentials: true });
-          console.log('Fetched Tickets:', response.data);
           if (Array.isArray(response.data)) {
             setTickets(response.data);
+
             const newCount = response.data.filter(ticket => ticket.status === 'NEW').length;
             const openCount = response.data.filter(ticket => ticket.status === 'OPEN').length;
             const pendingCount = response.data.filter(ticket => ticket.status === 'PENDING').length;
@@ -117,8 +92,7 @@ function ViewTickets() {
           tickets.map(ticket => (
             <div key={ticket.id} className="ticket-card">
               <div className="ticket-header">
-                <h3>{ticket.name}</h3>
-                {/* <span className={`priority-tag ${ticket.priority?.toLowerCase()}`}>{ticket.priority}</span> */}
+                <h3>{ticket.title}</h3> {/* Changed to ticket.title */}
               </div>
               <p><strong>Status:</strong> {ticket.status}</p>
             </div>
@@ -132,3 +106,4 @@ function ViewTickets() {
 }
 
 export default ViewTickets;
+
