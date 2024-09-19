@@ -24,7 +24,7 @@ const AgentSignUpPage = () => {
         });
 
         if (response.ok) {
-          navigate('/view-tickets/agent');
+          navigate('/agent');
         } else {
           alert('Error: Unable to sign up');
         }

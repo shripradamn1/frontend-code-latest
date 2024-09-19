@@ -1,12 +1,132 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './styles/EditTickets.css'; 
 
 const EditTickets = () => {
   const [user, setUser] = useState(null);
   const [tickets, setTickets] = useState([]);
-  const [editingTicket, setEditingTicket] = useState(null); // To track which ticket is being edited
+  const [editingTicket, setEditingTicket] = useState(null);
   const [updatedDescription, setUpdatedDescription] = useState('');
+
+  // Inline styles
+  const styles = {
+    container: {
+      padding: '20px',
+      backgroundColor: '#f7f5f2',
+      minHeight: '100vh',
+      fontFamily: 'Georgia, "Times New Roman", Times, serif',
+    },
+    header: {
+      textAlign: 'center',
+      marginBottom: '30px',
+      color: '#080707',
+      fontSize: '30px',
+    },
+    ticketCards: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '40px',
+      justifyContent: 'center',
+      marginBottom: '30px',
+    },
+    ticketCard: {
+      backgroundColor: '#fff',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      padding: '15px',
+      width: '250px',
+      textAlign: 'center',
+      transition: 'transform 0.3s, box-shadow 0.3s, background-color 0.3s', // Added transition for background-color
+      marginBottom: '90px',
+    },
+    ticketCardHover: {
+      backgroundColor: '#8b4513', // Brown color
+      transform: 'translateY(-5px)',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+    },
+    ticketCardTitle: {
+      margin: '0 0 10px',
+      color: '#0a0909',
+    },
+    ticketCardText: {
+      margin: '5px 0',
+      color: '#070707',
+    },
+    editButton: {
+      backgroundColor: '#007bff',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '5px',
+      padding: '10px 15px',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s',
+      marginTop: '10px',
+    },
+    editButtonDisabled: {
+      backgroundColor: '#ccc',
+      cursor: 'not-allowed',
+    },
+    editButtonHover: {
+      backgroundColor: '#0056b3',
+    },
+    modal: {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: '#77c5c5',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+      padding: '20px',
+      zIndex: '1000',
+      width: '300px',
+      maxWidth: '90%',
+    },
+    modalHeader: {
+      margin: '0 0 15px',
+      color: '#333',
+    },
+    inputField: {
+      marginBottom: '15px',
+    },
+    label: {
+      display: 'block',
+      marginBottom: '5px',
+      fontWeight: 'bold',
+      color: '#333',
+    },
+    textarea: {
+      width: '100%',
+      height: '100px',
+      border: '1px solid #ddd',
+      borderRadius: '5px',
+      padding: '10px',
+      boxSizing: 'border-box',
+      fontSize: '16px',
+      color: '#333',
+    },
+    button: {
+      backgroundColor: '#007bff',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '5px',
+      padding: '10px 15px',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s',
+      marginRight: '10px',
+    },
+    cancelButton: {
+      backgroundColor: '#6c757d',
+    },
+    buttonHover: {
+      backgroundColor: '#0056b3',
+    },
+    cancelButtonHover: {
+      backgroundColor: '#5a6268',
+    },
+  };
+  
 
   // Fetch logged-in user details
   useEffect(() => {
@@ -73,18 +193,28 @@ const EditTickets = () => {
   }
 
   return (
-    <div className="tickets-container">
-      <h2>Your Tickets</h2>
-      <div className="ticket-cards">
+    <div style={styles.container}>
+      <h2 style={styles.header}>Your Tickets</h2>
+      <div style={styles.ticketCards}>
         {tickets.map((ticket) => (
-          <div key={ticket.id} className="ticket-card">
-            <h3>{ticket.title}</h3>
-            <p>Status: {ticket.status}</p>
-            <p>Description: {ticket.description}</p>
+          <div
+            key={ticket.id}
+            style={styles.ticketCard}
+            onMouseEnter={(e) => e.currentTarget.style = { ...styles.ticketCard, ...styles.ticketCardHover }}
+            onMouseLeave={(e) => e.currentTarget.style = styles.ticketCard}
+          >
+            <h3 style={styles.ticketCardTitle}>{ticket.title}</h3>
+            <p style={styles.ticketCardText}>Status: {ticket.status}</p>
+            <p style={styles.ticketCardText}>Description: {ticket.description}</p>
             <button
               onClick={() => handleEditClick(ticket)}
-              disabled={ticket.status.toLowerCase() !== 'open'} // Disable button if status is not "OPEN"
-              className="edit-button"
+              disabled={ticket.status.toLowerCase() !== 'open'}
+              style={{
+                ...styles.editButton,
+                ...(ticket.status.toLowerCase() !== 'open' ? styles.editButtonDisabled : {}),
+              }}
+              onMouseEnter={(e) => e.currentTarget.style = { ...styles.editButton, ...styles.editButtonHover }}
+              onMouseLeave={(e) => e.currentTarget.style = styles.editButton}
             >
               Edit Information
             </button>
@@ -93,19 +223,30 @@ const EditTickets = () => {
       </div>
 
       {editingTicket && (
-        <div className="edit-ticket-modal">
-          <h3>Edit Ticket: {editingTicket.title}</h3>
-          <div className="input-field">
-            <label>Description:</label>
+        <div style={styles.modal}>
+          <h3 style={styles.modalHeader}>Edit Ticket: {editingTicket.title}</h3>
+          <div style={styles.inputField}>
+            <label style={styles.label}>Description:</label>
             <textarea
               value={updatedDescription}
               onChange={(e) => setUpdatedDescription(e.target.value)}
+              style={styles.textarea}
             />
           </div>
-          <button onClick={handleUpdateTicket} className="update-button">
+          <button
+            onClick={handleUpdateTicket}
+            style={styles.button}
+            onMouseEnter={(e) => e.currentTarget.style = { ...styles.button, ...styles.buttonHover }}
+            onMouseLeave={(e) => e.currentTarget.style = styles.button}
+          >
             Update Description
           </button>
-          <button onClick={() => setEditingTicket(null)} className="cancel-button">
+          <button
+            onClick={() => setEditingTicket(null)}
+            style={{ ...styles.button, ...styles.cancelButton }}
+            onMouseEnter={(e) => e.currentTarget.style = { ...styles.cancelButton, ...styles.cancelButtonHover }}
+            onMouseLeave={(e) => e.currentTarget.style = styles.cancelButton}
+          >
             Cancel
           </button>
         </div>

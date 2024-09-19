@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './styles/HomePage.css';
 import backgroundImage from './Images/image.png';
 
 const HomePage = () => {
@@ -10,114 +9,212 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const featuresData = [
-    { title: 'Create Ticket', description: 'Ticket management with advanced features to help your customers tackle issues without sacrificing the time and effort of your customer service team.', route: '/create-ticket' },
-    { title: 'View Tickets', description: 'Customers can communicate with your Bots and Live Chat. Live chat employees can deliver immediate and individualized customer service.', route: '/view-tickets' },
-    { title: 'Edit Tickets', description: 'Organize, update, and store a comprehensive self-serve library of reference materials with Support’s knowledge base software.', route: '/edit-tickets' },
-    { title: 'Helpdesk Automation', description: 'Acknowledge and respond to your customers’ issues quickly with advanced helpdesk automation software that will impress your customers.' }
+    { title: 'Create Ticket', route: '/create-ticket' },
+    { title: 'View Tickets', route: '/view-tickets' },
+    { title: 'Edit Tickets', route: '/edit-tickets' },
   ];
 
-  // Check if the user is logged in on component mount
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/checkLoggedInUser', {
-          withCredentials: true,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        setIsLoggedIn(response.data ? true : false); // If data exists, user is logged in
+        const response = await axios.get('http://localhost:7000/checkLoggedInUser', { withCredentials: true });
+        setIsLoggedIn(response.data ? true : false);
       } catch (error) {
-        console.error('Error checking logged-in status:', error);
         setIsLoggedIn(false);
       }
     };
-
     checkLoggedInStatus();
   }, []);
 
-  // Handle feature click
   const handleFeatureClick = (route) => {
     if (isLoggedIn) {
       navigate(route);
     } else {
       setShowLoginWarning(true);
-      setTimeout(() => {
-        setShowLoginWarning(false);
-      }, 3000); // Hide the warning after 3 seconds
+      setTimeout(() => setShowLoginWarning(false), 3000);
     }
   };
 
-  // Handle logout
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
       setIsLoggedIn(false);
-      navigate('/login'); // Redirect to login page
+      navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
 
+  const styles = {
+    homepageContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      minHeight: '90vh',
+      width: '100%',
+      overflowX: 'hidden',
+      
+    },
+    signUp: { marginRight: '1rem' ,borderRadius:'12px'},
+    signIn: { marginRight: '1rem' ,borderRadius:'12px'},
+    header: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '1rem',
+      backgroundColor: 'white',
+      width: '100%',
+      borderBottom: '1px solid #ddd',
+    },
+    heroSection: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '1rem',
+      backgroundColor: '#f8f9fa',
+      width: '100%',
+    },
+    heroText: {
+      flex: 1,
+      marginRight: '2rem',
+    },
+    heroImage: {
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+    },
+    heroImgStyle: {
+      maxWidth: '100%',
+      height: 'auto',
+      objectFit: 'cover',
+      maxHeight: '430px', // Added max height
+    },
+    
+    loginWarning: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: '#ffcc00',
+      color: '#333',
+      textAlign: 'center',
+      padding: '10px',
+      fontSize: '16px',
+      zIndex: 1000,
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+    },
+    getStartedButton: {
+      backgroundColor: '#007bff',
+      color: 'white',
+      padding: '10px 20px',
+      border: 'none',
+      cursor: 'pointer',
+      borderRadius: '5px',
+      fontSize: '18px',
+    },
+    featuresSection: {
+      backgroundColor: '#f9fafc',
+      textAlign: 'center',
+      padding: '2rem 1rem',
+    },
+    featuresGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '2rem',
+      maxWidth: '1200px',
+      margin: '0 auto',
+    },
+    featureCard: {
+      backgroundColor: 'white',
+      padding: '1.5rem',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      textAlign: 'center',
+      transition: 'transform 0.3s, border-color 0.3s, background-color 0.3s',
+      cursor: 'pointer',
+      border: '2px solid transparent',
+      display: 'flex',
+      flexDirection: 'column',
+      // alignItems: 'center', // Align children in the center horizontally
+      justifyContent: 'center', // Align children in the center vertically
+    },
+    featureCardHover: {
+      transform: 'translateY(-10px)',
+      borderColor: '',
+      backgroundColor: '#5270E9',
+    },
+    footer: {
+      backgroundColor: '#f1f1f1',
+      padding: '1rem',
+      textAlign: 'center',
+    },
+    logoutButton: {
+      backgroundColor: '#f50057',
+      color: 'white',
+      padding: '10px 20px',
+      border: 'none',
+      cursor: 'pointer',
+      borderRadius: '5px',
+      fontSize: '16px',
+      marginLeft: '1rem',
+    },
+  };
+
   return (
-    <div className="homepage-container">
-      {/* Display login warning if user is not logged in */}
+    <div style={styles.homepageContainer}>
       {showLoginWarning && (
-        <div className="login-warning">
+        <div style={styles.loginWarning}>
           <p>Please log in to access this feature!</p>
         </div>
       )}
 
-      <div className="header">
-        <div className="logo"></div>
-        <nav className="nav-links"></nav>
-
-        <div className="auth-buttons">
+      <header style={styles.header}>
+        <div className="logo">LOGO</div>
+        <div>
           {isLoggedIn ? (
-            <button className="logout" onClick={handleLogout}>Logout</button>
+            <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
           ) : (
             <>
-              <button className="sign-in" onClick={() => navigate('/login')}>Sign In</button>
-              <button className="sign-up" onClick={() => navigate('/signup/user')}>Sign Up</button>
+              <button style={styles.signIn}  onClick={() => navigate('/login')}>Sign In</button>
+              <button style={styles.signUp} onClick={() => navigate('/signup/user')}>Sign Up</button>
             </>
           )}
         </div>
-      </div>
+      </header>
 
-      <div className="hero-section">
-        <div className="hero-text">
+      <section style={styles.heroSection}>
+        <div style={styles.heroText}>
           <h1>Ticket Management</h1>
-          <h3>for streamlining your helpdesk</h3>
-          <p>
-            Help your customer service staff in prioritizing, categorizing, assigning, and managing agents with real-time tracking of the tickets received.
-          </p>
-          <button className="get-started-button" onClick={() => navigate('/features')}>Get Started</button>
+          <h3>Streamline your helpdesk</h3>
+          <button style={styles.getStartedButton} onClick={() => navigate('/features')}>Get Started</button>
         </div>
-        <div className="hero-image">
-          <img src={backgroundImage} alt="Ticketing System Illustration" />
-        </div>
-      </div>
-
-      <section className="features-section">
-        <div className="features-container">
-          <h2 className="features-title">Explore More Features</h2>
-          <div className="features-grid">
-            {featuresData.map((feature, index) => (
-              <div key={index} className="feature-card" onClick={() => handleFeatureClick(feature.route)}>
-                <h3 className="feature-title">{feature.title}</h3>
-                <p className="feature-description">{feature.description}</p>
-              </div>
-            ))}
-          </div>
+        <div style={styles.heroImage}>
+          <img src={backgroundImage} alt="Ticketing System Illustration" style={styles.heroImgStyle} />
         </div>
       </section>
 
-      <footer className="footer">
-        <p>© 2024 Support.cc. All rights reserved.</p>
+      <section style={styles.featuresSection}>
+        <h3>Explore Features</h3>
+        <div style={styles.featuresGrid}>
+          {featuresData.map((feature, index) => (
+            <div
+              key={index}
+              style={styles.featureCard}
+              onClick={() => handleFeatureClick(feature.route)}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-10px)')}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = 'none')}
+            >
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer style={styles.footer}>
         <div className="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Contact Us</a>
+          <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a>
         </div>
       </footer>
     </div>
