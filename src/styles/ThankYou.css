@@ -1,0 +1,104 @@
+/* Container for centering the card */
+.thank-you-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+  
+  /* Thank-you Card Styling */
+  .thank-you-card {
+    background-color: white;
+    padding: 40px 60px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* Thank You Heading */
+  .thank-you-card h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 30px; /* Adjusted for better spacing */
+  }
+  
+  .thank-you-card h2 {
+    /* font-family: 'Arial', sans-serif; */
+    color: #555;
+    font-size: 17px;
+    margin-bottom: 10px; /* Adjusted for better spacing */
+  }
+
+  /* Descriptive Text */
+  .thank-you-card h3 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px; 
+    line-height: 1.6;
+    align-items: center;
+  }
+  
+  /* Email Section */
+  .thank-you-card .email {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .thank-you-card .email a {
+    color: #4c9fd4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .thank-you-card .email a:hover {
+    color: #3b8ab0;
+    text-decoration: underline;
+  }
+  
+  /* Email Icon */
+  .thank-you-card .email a::before {
+    content: '📧';
+    margin-right: 8px;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  /* Button Styling */
+  .home-btn {
+    background-color: #4c9fd4;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .home-btn:hover {
+    background-color: #3b8ab0;
+  }
+  
+  /* Fade In Animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
