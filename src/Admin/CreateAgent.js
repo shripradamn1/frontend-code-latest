@@ -6,8 +6,7 @@ const CreateAgent = () => {
   const [categories, setCategories] = useState([]);
   const [teams, setTeams] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [selectedTeamId, setSelectedTeamId] = useState(''); // Added state for team ID
+  const [selectedTeamName, setSelectedTeamName] = useState(''); // Will store the team name
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState(''); // Added state for username
@@ -16,6 +15,7 @@ const CreateAgent = () => {
 
   const navigate = useNavigate();
 
+  // Fetch categories on component mount
   useEffect(() => {
     axios.get('http://localhost:7000/api/categories', {
       withCredentials: true,
@@ -31,31 +31,7 @@ const CreateAgent = () => {
     });
   }, []);
 
-  const getTeamIdFromName = (categoryName, teamName) => {
-    if (categoryName === '1') {
-      switch (teamName) {
-        case 'Support Team A':
-          return 1;
-        case 'Support Team B':
-          return 2;
-        case 'Support Team C':
-          return 3;
-        default:
-          return null;
-      }
-    } else if (categoryName === '2') {
-      switch (teamName) {
-        case 'HardWare team A':
-          return 1;
-        case 'HardWare team B':
-          return 2;
-        default:
-          return null;
-      }
-    }
-    return null;
-  };
-
+  // Handle category change and fetch corresponding teams
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
@@ -67,25 +43,44 @@ const CreateAgent = () => {
       }
     })
     .then((response) => {
-      setTeams(response.data);
+      setTeams(response.data); // Response should contain teams with their names
     })
     .catch((error) => {
       console.error('Error fetching teams:', error);
     });
   };
 
+  // Handle team change by using team names to map to IDs
   const handleTeamChange = (e) => {
     const selectedTeamName = e.target.value;
-    setSelectedTeam(selectedTeamName);
-
-    const teamId = getTeamIdFromName(selectedCategory, selectedTeamName);
-    setSelectedTeamId(teamId); 
+    setSelectedTeamName(selectedTeamName); // Store the selected team name
   };
 
+  // Map team names to their corresponding IDs
+  const getTeamId = (teamName) => {
+    switch (teamName) {
+      case 'Application Support Team':
+        return 1;
+      case 'Technical Support Team':
+        return 2;
+      case 'Security Team':
+        return 3;
+        case 'Device Support Team':
+          return 4;
+        case 'Networking and Connectivity Team':
+          return 5;
+        case 'Telecommunication Equipment Team':
+          return 6;
+    }
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (selectedTeamId === null) {
+    const selectedTeamId = getTeamId(selectedTeamName); // Map team name to team ID
+
+    if (!selectedTeamId) {
       setErrorMessage('Invalid team selected');
       return;
     }
@@ -96,7 +91,8 @@ const CreateAgent = () => {
       username, // Include username in agentData
       categoryId: selectedCategory,  // Send categoryId
     };
-
+    // console.log("team"+selectedTeamId)
+    // console.log("cat"+selectedC)
     axios.post(`http://localhost:7000/api/agents/category/${selectedCategory}/team/${selectedTeamId}`, agentData, {
       withCredentials: true,
       headers: {
@@ -110,10 +106,9 @@ const CreateAgent = () => {
       setEmail('');
       setUsername(''); // Clear username field
       setSelectedCategory('');
-      setSelectedTeam('');
-      setSelectedTeamId(''); // Clear team ID state
+      setSelectedTeamName(''); // Clear team name state
       setTeams([]);
-      navigate('/agent/manage-tickets'); // Redirect to success page
+      navigate('/admin'); // Redirect to success page
     })
     .catch((error) => {
       console.error('Error registering agent:', error);
@@ -121,42 +116,89 @@ const CreateAgent = () => {
     });
   };
 
+  // Styles for the form
+  const formStyle = {
+    maxWidth: '400px',
+    margin: '0 auto',
+    marginTop:'50px',
+    padding: '30px',
+    border: '1px solid #ccc',
+    borderRadius: '10px',
+    backgroundColor: '#f9f9f9'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    margin: '8px 0',
+    borderRadius: '4px',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box'
+  };
+
+  const buttonStyle = {
+    width: '100%',
+    padding: '10px',
+    marginTop: '10px',
+    backgroundColor: '#0000FF',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer'
+  };
+
+  const labelStyle = {
+    fontWeight: 'bold',
+    display: 'block',
+    marginTop: '10px'
+  };
+
+  const messageStyle = {
+    color: successMessage ? 'green' : 'red',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: '10px'
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register New Agent</h2>
+    <form onSubmit={handleSubmit} style={formStyle}>
+      <h2 style={{ textAlign: 'center' }}>Register New Agent</h2>
 
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {successMessage && <p style={messageStyle}>{successMessage}</p>}
+      {errorMessage && <p style={messageStyle}>{errorMessage}</p>}
 
-      <label htmlFor="username">Username:</label>
+      <label htmlFor="username" style={labelStyle}>Username:</label>
       <input
         id="username"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
+        style={inputStyle}
       />
 
-      <label htmlFor="name">Name:</label>
+      <label htmlFor="name" style={labelStyle}>Name:</label>
       <input
         id="name"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
+        style={inputStyle}
       />
 
-      <label htmlFor="email">Email:</label>
+      <label htmlFor="email" style={labelStyle}>Email:</label>
       <input
         id="email"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+        style={inputStyle}
       />
 
-      <label htmlFor="category">Category:</label>
-      <select id="category" value={selectedCategory} onChange={handleCategoryChange} required>
+      <label htmlFor="category" style={labelStyle}>Category:</label>
+      <select id="category" value={selectedCategory} onChange={handleCategoryChange} required style={inputStyle}>
         <option value="">Select Category</option>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
@@ -167,11 +209,11 @@ const CreateAgent = () => {
 
       {selectedCategory && teams.length > 0 && (
         <div>
-          <label htmlFor="team">Team:</label>
-          <select id="team" value={selectedTeam} onChange={handleTeamChange} required>
+          <label htmlFor="team" style={labelStyle}>Team:</label>
+          <select id="team" value={selectedTeamName} onChange={handleTeamChange} required style={inputStyle}>
             <option value="">Select Team</option>
             {teams.map((team) => (
-              <option key={team.id} value={team.name}>
+              <option key={team.name} value={team.name}> {/* Using team.name and mapping manually */}
                 {team.name}
               </option>
             ))}
@@ -179,7 +221,7 @@ const CreateAgent = () => {
         </div>
       )}
 
-      <button type="submit">Submit</button>
+      <button type="submit" style={buttonStyle}>Submit</button>
     </form>
   );
 };

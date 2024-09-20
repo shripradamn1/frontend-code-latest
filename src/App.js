@@ -19,10 +19,16 @@ import CategoryList from './Admin/CategoryList';
 import TeamsList from './Admin/TeamsList'
 import CreateAgent from './Admin/CreateAgent';
 import AdminLogin from './Admin/AdminLogin';
+
 import FeedbackForm from './FeedbackForm';
 import ThankYou from './ThankYou';
 import ViewTicketsAdmin from './Admin/ViewTicketsAdmin';
 import FeedbackDashboard from './FeedbackDashboard';
+
+import AdminDashboard from './Admin/AdminDashboard'
+import SuccessPage from './Success';
+import FeaturesAgent from './Agent/FeaturesAgent';
+
 function App() {
   return (
     <div className="App">
@@ -32,21 +38,29 @@ function App() {
         <Route path="/agent" element={<HomePageAgent />} />
           <Route path="/signup/user" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/success" element={<SuccessPage />} />
           <Route path="/features" element={<Features/>} />
           <Route path="/create-ticket" element={<CreateTicket/>} />
           <Route path="/ticket-details/:title" element={<ViewTicketDetails />} />
           <Route path="/view-tickets" element={<ViewTicketsUser/>} />
           <Route path="/edit-tickets" element={<EditTickets/>} />
+
+          {/* agent part */}
           <Route path="/signup/agent" element={<AgentSignUpPage />} />
           <Route path="agent/login/agent" element={<AgentLoginPage />} />
           <Route path="/view-tickets/agent" element={<ViewTickets/>} />
           <Route path="/edit-tickets/agent" element={<EditTicketsAgent/>} />
+
           <Route path="/feedback/:ticketId" element={<FeedbackForm />} />
           <Route path="/ThankYou" element={<ThankYou />} />
           
 
+          <Route path="/features/agent" element={<FeaturesAgent/>} />
+
+
           {/* admin part */}
 
+          <Route path="/admin" element={<AdminDashboard/>} />
           <Route path="/viewAgents/admin" element={<ViewAgents/>} />
           <Route path="/categories/admin" element={<CategoryList/>} />
           <Route path="/teams/admin" element={<TeamsList/>} />

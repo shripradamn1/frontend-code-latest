@@ -40,7 +40,7 @@ const AdminLogin = () => {
             setIsLoggedIn(true);
             setUserId(user.id);
             setUserData(user);
-            navigate('/');
+            navigate('/admin');
           } else {
             alert('Invalid role');
           }

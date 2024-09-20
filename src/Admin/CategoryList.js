@@ -149,9 +149,9 @@ const CategoryList = () => {
                 </DialogActions>
             </Dialog>
  
-            <footer>
+            {/* <footer>
                 <p>© 2024 Category Management</p>
-            </footer>
+            </footer> */}
         </div>
     );
 };
