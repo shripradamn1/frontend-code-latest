@@ -19,6 +19,11 @@ import CategoryList from './Admin/CategoryList';
 import TeamsList from './Admin/TeamsList'
 import CreateAgent from './Admin/CreateAgent';
 import AdminLogin from './Admin/AdminLogin';
+
+import FeedbackForm from './FeedbackForm';
+import ThankYou from './ThankYou';
+import FeedbackDashboard from './FeedbackDashboard';
+
 import AdminDashboard from './Admin/AdminDashboard'
 import SuccessPage from './Success';
 import FeaturesAgent from './Agent/FeaturesAgent';
@@ -44,7 +49,13 @@ function App() {
           <Route path="agent/login/agent" element={<AgentLoginPage />} />
           <Route path="/view-tickets/agent" element={<ViewTickets/>} />
           <Route path="/edit-tickets/agent" element={<EditTicketsAgent/>} />
+
+          <Route path="/feedback/:ticketId" element={<FeedbackForm />} />
+          <Route path="/ThankYou" element={<ThankYou />} />
+          
+
           <Route path="/features/agent" element={<FeaturesAgent/>} />
+
 
           {/* admin part */}
 
@@ -54,6 +65,7 @@ function App() {
           <Route path="/teams/admin" element={<TeamsList/>} />
           <Route path="/CreateAgents/admin" element={<CreateAgent/>} />
           <Route path="/login/admin" element={<AdminLogin/>} />
+          <Route path="/admin/feedback" element={<FeedbackDashboard />} />
 
 
           {/*  */}
