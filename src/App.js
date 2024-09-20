@@ -22,7 +22,9 @@ import AdminLogin from './Admin/AdminLogin';
 import AdminDashboard from './Admin/AdminDashboard'
 import SuccessPage from './Success';
 import FeaturesAgent from './Agent/FeaturesAgent';
-
+import FeedbackForm from './FeedbackForm';
+import ThankYou from './ThankYou';
+import FeedbackDashboard from './FeedbackDashboard';
 function App() {
   return (
     <div className="App">
@@ -54,6 +56,12 @@ function App() {
           <Route path="/teams/admin" element={<TeamsList/>} />
           <Route path="/CreateAgents/admin" element={<CreateAgent/>} />
           <Route path="/login/admin" element={<AdminLogin/>} />
+
+          <Route path="/feedback/:ticketId" element={<FeedbackForm />} />
+          <Route path="/ThankYou" element={<ThankYou />} />
+          <Route path="/admin/feedback" element={<FeedbackDashboard />} />
+
+          
 
 
           {/*  */}
