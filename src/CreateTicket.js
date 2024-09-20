@@ -86,7 +86,7 @@ const CreateTicket = () => {
           return 2;
         case 'Telecommunication Equipment Team':
           return 3;
-          default:
+        default:
           return 4;
       }
     }
@@ -123,6 +123,9 @@ const CreateTicket = () => {
 
     axios.post(`http://localhost:7000/api/tickets/${loggedInUserId}/${selectedCategory}/${teamId}`, formData, {
       withCredentials: true,
+      headers: {
+        'Content-Type': 'multipart/form-data' // Important for file upload
+      }
     })
     .then((response) => {
       console.log('Ticket created successfully:', response.data);
