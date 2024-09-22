@@ -1,39 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { FaUserCircle, FaBell, FaTags, FaUsers, FaUserPlus } from 'react-icons/fa';
+ 
 const AdminDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginWarning, setShowLoginWarning] = useState(false);
   const navigate = useNavigate();
-
+ 
   const featuresData = [
-    { title: 'Categories', route: '/categories/admin' },
-    { title: 'Teams', route: '/teams/admin' },
-    { title: 'Agents', route: '/viewAgents/admin' },
-    { title: 'Create Agent', route: '/CreateAgents/admin' }
+    { title: 'Categories', route: '/categories/admin', icon: <FaTags /> },
+    { title: 'Teams', route: '/teams/admin', icon: <FaUsers /> },
+    { title: 'Agents', route: '/viewAgents/admin', icon: <FaUserCircle /> },
+    { title: 'Create Agent', route: '/CreateAgents/admin', icon: <FaUserPlus /> }
   ];
-
+ 
   const [hovered, setHovered] = useState(null);
-
-  const featureCardStyle = (isHovered) => ({
-    backgroundColor: isHovered ? '#007bff' : '#f8f9fa', // Change on hover
-    color: isHovered ? '#efcaca' : '#343a40', // Change text color on hover
-    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    cursor: 'pointer',
-    height: '200px', // Adjust the card height
-    overflow: 'hidden',
-    textAlign: 'center',
-    marginTop: '30px',
-    fontFamily: 'Georgia, "Times New Roman", Times, serif'
-  });
-
-  const cardBodyStyle = {
-    padding: '30px',
-    textAlign: 'center'
-  };
-
+ 
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       try {
@@ -51,7 +34,7 @@ const AdminDashboard = () => {
     };
     checkLoggedInStatus();
   }, []);
-
+ 
   const handleFeatureClick = (route) => {
     if (isLoggedIn) {
       navigate(route);
@@ -62,7 +45,7 @@ const AdminDashboard = () => {
       }, 3000);
     }
   };
-
+ 
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
@@ -72,58 +55,153 @@ const AdminDashboard = () => {
       console.error('Error logging out:', error);
     }
   };
-
+ 
+  const featureCardStyle = (isHovered) => ({
+    background: isHovered ? 'linear-gradient(135deg, #6e8efb, #a777e3)' : '#f8f9fa',
+    color: isHovered ? '#fff' : '#343a40',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    cursor: 'pointer',
+    height: '150px',
+    overflow: 'hidden',
+    textAlign: 'center',
+    marginTop: '30px',
+    fontFamily: 'Georgia, "Times New Roman", Times, serif',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  });
+ 
+  const cardBodyStyle = {
+    padding: '20px',
+    textAlign: 'center'
+  };
+ 
   return (
-    <div className="container my-4">
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {showLoginWarning && (
-        <div className="alert alert-warning text-center" role="alert">
+        <div style={{
+          backgroundColor: '#ffc107',
+          color: '#856404',
+          padding: '10px',
+          textAlign: 'center',
+          width: '100%',
+          position: 'fixed',
+          top: '0',
+          zIndex: '1001'
+        }}>
           Please log in to access this feature!
         </div>
       )}
-
-      {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Ticket Management</a>
-          <div className="collapse navbar-collapse justify-content-end">
-            {isLoggedIn ? (
-              <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
-            ) : (
-              <>
-                <button className="btn btn-outline-primary me-2" onClick={() => navigate('/login/admin')}>Sign In</button>
-                {/* <button className="btn btn-outline-secondary" onClick={() => navigate('/signup/user')}>Sign Up</button> */}
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
-
-      {/* Feature Cards */}
-      <div className="custom-features-container mt-4">
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+ 
+      {/* Header */}
+      <header style={{
+        backgroundColor: '#fff',
+        padding: '20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: '1px solid #ddd',
+        width: '100%',
+        position: 'fixed',
+        top: '0',
+        zIndex: '1000',
+        boxSizing: 'border-box'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           {featuresData.map((feature, index) => (
-            <div 
-              key={index} 
-              className="col"
+            <div
+              key={index}
+              onMouseEnter={() => setHovered(index)}
+              onMouseLeave={() => setHovered(null)}
+              onClick={() => handleFeatureClick(feature.route)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                cursor: 'pointer',
+                color: hovered === index ? '#007bff' : '#343a40'
+              }}
+            >
+              {feature.icon}
+              <span>{feature.title}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {isLoggedIn ? (
+            <button style={{
+              backgroundColor: 'transparent',
+              border: '1px solid #dc3545',
+              color: '#dc3545',
+              padding: '5px 10px',
+              cursor: 'pointer',
+              borderRadius: '5px'
+            }} onClick={handleLogout}>Logout</button>
+          ) : (
+            <button style={{
+              backgroundColor: 'transparent',
+              border: '1px solid #007bff',
+              color: '#007bff',
+              padding: '5px 10px',
+              cursor: 'pointer',
+              borderRadius: '5px'
+            }} onClick={() => navigate('/login/admin')}>Sign In</button>
+          )}
+        </div>
+      </header>
+ 
+      {/* Main Content */}
+      <div style={{ flex: '1', padding: '20px', marginTop: '100px' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          flexWrap: 'wrap',
+          gap: '20px'
+        }}>
+          {featuresData.map((feature, index) => (
+            <div
+              key={index}
+              style={{
+                flex: '1 1 20%',
+                maxWidth: '20%',
+                boxSizing: 'border-box'
+              }}
               onMouseEnter={() => setHovered(index)}
               onMouseLeave={() => setHovered(null)}
             >
-              <div 
-                className="card h-100 d-flex align-items-center justify-content-center text-center"
+              <div
                 style={featureCardStyle(hovered === index)} // Apply hover styles conditionally
                 onClick={() => handleFeatureClick(feature.route)}
               >
-                <div className="card-body" style={cardBodyStyle}>
-                  <h3 className="card-title">{feature.title}</h3>
-                  <p className="card-text">{feature.description}</p>
+                <div style={cardBodyStyle}>
+                  <div style={{ fontSize: '40px', marginBottom: '10px' }}>{feature.icon}</div>
+                  <h3 style={{ margin: '0', fontSize: '18px' }}>{feature.title}</h3>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+ 
+      {/* Footer */}
+      <footer style={{
+        backgroundColor: '#f8f9fa',
+        padding: '10px 20px',
+        textAlign: 'center',
+        borderTop: '1px solid #ddd',
+        width: '100%',
+        marginTop: 'auto',
+        boxSizing: 'border-box'
+      }}>
+        <p>© 2024 Your Company. All rights reserved.</p>
+        <p>
+          <a href="#" style={{ color: '#007bff', textDecoration: 'none' }}>Privacy Policy</a> |
+          <a href="#" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '10px' }}>Terms of Service</a>
+        </p>
+      </footer>
     </div>
   );
 };
-
-export default AdminDashboard;
+ 
+export default AdminDashboard

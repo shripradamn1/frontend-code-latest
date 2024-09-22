@@ -31,6 +31,11 @@ const ViewAgents = () => {
       selector: row => row.username ? row.username : 'N/A', // Check for null or undefined
       sortable: true 
     },
+    { 
+      name: 'Team', 
+      selector: row => row.team ? row.team.teamName : 'No Team Assigned', // Display team name or fallback text
+      sortable: true 
+    }
   ];
 
   const containerStyle = {
