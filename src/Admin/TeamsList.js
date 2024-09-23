@@ -1,77 +1,107 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import Header from './Header';
 
-const AppContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f4f4f9;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  color: #333;
-`;
-
-const AppHeader = styled.header`
-  background-color: #212529;
-  color: #ffffff;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 1.5rem;
-  letter-spacing: 1px;
-`;
-
-const CategoryContainer = styled.main`
-  padding: 40px;
-  flex-grow: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const CategoryList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const CategoryBox = styled.li`
-  position: relative;
-  padding: 20px;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  background-color: #fff;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-  flex-grow: 1;
-
-  &:hover {
-    background-color: #f8f9fa;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    transform: translateY(-4px);
-  }
-`;
-
-const HoverContent = styled.div`
-  display: none;
-  position: absolute;
-  top: 0;
-  right: -300px;
-  width: 250px;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 20px;
-  border-radius: 10px;
-  color: #fff;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  z-index: 10;
-
-  ${CategoryBox}:hover & {
-    display: flex;
-  }
-`;
+// CSS styles for the layout
+const styles = {
+  body: {
+    margin: 0,
+    padding: 0,
+    width: '100%',
+    height: '100%',
+    fontFamily: 'Arial, sans-serif',
+  },
+  header: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 20px',
+    width: '100%',
+    backgroundColor: '#f8f9fa',
+    color: 'black',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    zIndex: 1000,
+  },
+  headerTitle: {
+    margin: '0',
+    fontSize: '1.5rem',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    paddingTop: '100px',
+  },
+  categoriesContainer: {
+    width: '50%',
+    padding: '20px',
+    backgroundColor: '#fff',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    marginTop: '20px',
+  },
+  categoryList: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginBottom: '20px',
+  },
+  categoryBox: {
+    flex: '1',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    margin: '10px',
+    backgroundColor: '#f0f0f0',
+  },
+  categoryText: {
+    fontSize: '1.2rem',
+    fontWeight: '500',
+    color: '#333',
+  },
+  teamList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '20px 0',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '20px',
+    justifyContent: 'flex-start',
+  },
+  teamItem: {
+    backgroundColor: '#ffffff',
+    padding: '20px 30px',
+    borderRadius: '8px',
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+    fontSize: '1.2rem',
+    fontWeight: '500',
+    color: '#333',
+    textAlign: 'center',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  teamTitle: {
+    marginTop: '40px',
+    fontSize: '1.6rem',
+    fontWeight: '600',
+    color: '#212529',
+    textAlign: 'left',
+  },
+};
 
 const CategoryComponent = () => {
   const [categories, setCategories] = useState([]);
@@ -79,106 +109,97 @@ const CategoryComponent = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newTeamName, setNewTeamName] = useState('');
-  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:7000/api/categories', { withCredentials: true })
-      .then(response => {
+    axios
+      .get('http://localhost:7000/api/categories', { withCredentials: true })
+      .then((response) => {
         setCategories(response.data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setError('Failed to fetch categories');
         setLoading(false);
       });
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    axios.get(`http://localhost:7000/api/categories/${categoryId}`, { withCredentials: true })
-      .then(response => {
+    axios
+      .get(`http://localhost:7000/api/categories/${categoryId}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
         setSelectedCategory(response.data);
-        localStorage.setItem('selectedCategory', JSON.stringify(response.data));
         fetchTeamsByCategory(categoryId);
       })
-      .catch(error => {
+      .catch((error) => {
         setError('Failed to fetch category by ID');
       });
   };
 
   const fetchTeamsByCategory = (categoryId) => {
-    axios.get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, { withCredentials: true })
-      .then(response => {
-        setTeams(response.data);
-        localStorage.setItem('teamsForCategory', JSON.stringify(response.data));
+    axios
+      .get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, {
+        withCredentials: true,
       })
-      .catch(error => {
+      .then((response) => {
+        setTeams(response.data);
+      })
+      .catch((error) => {
         setError('Failed to fetch teams for category');
       });
   };
 
-  const handleCreateTeam = () => {
-    if (newTeamName.trim() === '' || !selectedCategory) return;
-    axios.post(`http://localhost:7000/api/teams?categoryId=${selectedCategory.id}`, {
-      name: newTeamName
-    }, { withCredentials: true })
-      .then(response => {
-        alert(`Team ${newTeamName} has been created successfully`);
-        setNewTeamName('');
-        setShowForm(false);
-        fetchTeamsByCategory(selectedCategory.id);
-      })
-      .catch(error => {
-        setError('Failed to create team');
-      });
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      localStorage.removeItem('username'); // Clear the username from localStorage
+      navigate('/login/admin'); // Redirect to login page after logout
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
-    <AppContainer>
-      <AppHeader>
-        <h1>Team Management</h1>
-      </AppHeader>
-      <CategoryContainer>
-        <h2>Categories</h2>
-        <CategoryList>
-          {categories.map(category => (
-            <CategoryBox key={category.id} onClick={() => handleCategoryClick(category.id)}>
-              <span>{category.name}</span>
-              <HoverContent>
-                <button onClick={() => { setSelectedCategory(category); setShowForm(true); }}>Create Team</button>
-              </HoverContent>
-            </CategoryBox>
-          ))}
-        </CategoryList>
-        {selectedCategory && (
-          <div>
-            <h3>Teams in {selectedCategory.name}:</h3>
-            <ul>
-              {teams.map(team => (
-                <li key={team.id}>{team.name}</li>
-              ))}
-            </ul>
+    <div style={styles.body}>
+      <Header isLoggedIn={true} onLogout={handleLogout} /> {/* Pass handleLogout to Header */}
+
+      <div style={styles.container}>
+        <div style={styles.categoriesContainer}>
+          <h2>Categories</h2>
+          <div style={styles.categoryList}>
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                style={styles.categoryBox}
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                <span style={styles.categoryText}>{category.name}</span>
+              </div>
+            ))}
           </div>
-        )}
-        {showForm && selectedCategory && (
-          <div>
-            <h3>Create a new team in {selectedCategory.name}</h3>
-            <label>
-              Team Name:
-              <input
-                type="text"
-                value={newTeamName}
-                onChange={(e) => setNewTeamName(e.target.value)}
-              />
-            </label>
-            <button onClick={handleCreateTeam}>Create Team</button>
-          </div>
-        )}
-      </CategoryContainer>
-    </AppContainer>
+
+          {selectedCategory && (
+            <>
+              <h3 style={styles.teamTitle}>
+                Teams in {selectedCategory.name}:
+              </h3>
+              <ul style={styles.teamList}>
+                {teams.map((team) => (
+                  <li key={team.id} style={styles.teamItem}>
+                    {team.name}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

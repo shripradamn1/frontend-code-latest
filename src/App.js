@@ -27,6 +27,7 @@ import FeedbackDashboard from './FeedbackDashboard';
 import AdminDashboard from './Admin/AdminDashboard'
 import SuccessPage from './Success';
 import FeaturesAgent from './Agent/FeaturesAgent';
+import ViewClosedTickets from './Agent/ViewClosedTickets';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
           
 
           <Route path="/features/agent" element={<FeaturesAgent/>} />
+          <Route path="/closed-tickets/agent" element={<ViewClosedTickets/>} />
 
 
           {/* admin part */}
