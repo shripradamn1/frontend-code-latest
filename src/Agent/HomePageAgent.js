@@ -1,30 +1,40 @@
-import React, { useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import backgroundImage from '../Images/image.png';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import backgroundImage from "../Images/image.png";
+import CommonHeader from "./CommonHeader"; // Import CommonHeader
 
 const HomePageAgent = () => {
-  const [signUpData, setSignUpData] = useState({ username: '', email: '', password: '' });
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+  const [signUpData, setSignUpData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const featuresData = [
-    { title: 'View Tickets', route: '/view-tickets/agent' },
-    { title: 'Edit Tickets', route: '/edit-tickets/agent' }
+    { title: "View Tickets", route: "/view-tickets/agent" },
+    { title: "Edit Tickets", route: "/edit-tickets/agent" },
+    { title: "Closed Tickets", route: "/closed-tickets/agent" },
   ];
 
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:7000/api/checkLoggedInUser', { withCredentials: true });
-  //       setIsLoggedIn(response.status === 200);
-  //     } catch (error) {
-  //       console.error('Error checking login status:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:7000/checkLoggedInUser",
+          { withCredentials: true }
+        );
+        setIsLoggedIn(response.status === 200);
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      }
+    };
 
-  //   checkLoginStatus();
-  // }, []);
+    checkLoginStatus();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,55 +43,68 @@ const HomePageAgent = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:7000/api/signup', signUpData, { withCredentials: true });
+      const response = await axios.post(
+        "http://localhost:7000/api/signup",
+        signUpData,
+        { withCredentials: true }
+      );
+
       if (response.status === 200) {
         setIsLoggedIn(true);
-        navigate('/');
+        navigate("/agent");
       } else {
-        console.error('Sign-up failed');
+        console.error("Sign-up failed");
       }
     } catch (error) {
-      console.error('Error during sign-up:', error);
+      console.error("Error during sign-up:", error);
     }
   };
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/api/logout', {}, { withCredentials: true });
+      await axios.post(
+        "http://localhost:7000/logout",
+        {},
+        { withCredentials: true }
+      );
       setIsLoggedIn(false);
-      navigate('/');
+      navigate("/agent/login/agent"); // Redirect after logout
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error("Error during logout:", error);
+    }
+  };
+
+  const handleGetStarted = () => {
+    if (!isLoggedIn) {
+      alert("Please log in to access the features.");
+    } else {
+      navigate("/features/agent");
     }
   };
 
   return (
     <div style={styles.container}>
-      <header style={styles.header}>
-        <div className="logo-agent"></div>
-        <nav className="nav-links-agent"></nav>
-        <div style={styles.authButtons}>
-          {!isLoggedIn ? (
-            <>
-              <button style={styles.button} onClick={() => navigate('login/agent')}>Sign In</button>
-              {/* <button style={styles.button} onClick={() => navigate('/signup/agent')}>Sign Up</button> */}
-            </>
-          ) : (
-            <button style={styles.button} onClick={handleLogout}>Logout</button>
-          )}
-        </div>
-      </header>
+      <CommonHeader isLoggedIn={isLoggedIn} onLogout={handleLogout} showHomeIcon={false} />{/* Use CommonHeader here */}
 
       <main style={styles.mainSection}>
         <div style={styles.heroText}>
           <h1>Ticket Management</h1>
-          {/* <h3>for streamlining your helpdesk</h3> */}
-          {/* <p>Help your customer service staff in prioritizing, categorizing, assigning, and managing agents with real-time tracking of the tickets received.</p> */}
-          <button style={styles.getStartedButton} onClick={() => navigate('/features/agent')}>Get Started</button>
+          <button
+            style={styles.getStartedButton}
+            onClick={handleGetStarted}
+          >
+            Get Started
+          </button>
         </div>
+
         <div style={styles.heroImage}>
-          <img src={backgroundImage} alt="Ticketing System Illustration" style={styles.heroImg} />
+          <img
+            src={backgroundImage}
+            alt="Ticketing System Illustration"
+            style={styles.heroImg}
+          />
         </div>
       </main>
 
@@ -89,9 +112,18 @@ const HomePageAgent = () => {
         <h2>Explore More Features</h2>
         <div style={styles.featuresGrid}>
           {featuresData.map((feature, index) => (
-            <div key={index} style={styles.featureCard} onClick={() => navigate(feature.route)}>
+            <div
+              key={index}
+              style={styles.featureCard}
+              onClick={() => {
+                if (!isLoggedIn) {
+                  alert("Please log in to access the feature");
+                } else {
+                  navigate(feature.route);
+                }
+              }}
+            >
               <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
             </div>
           ))}
         </div>
@@ -102,105 +134,71 @@ const HomePageAgent = () => {
 
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: "Arial, sans-serif",
     margin: 0,
     padding: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    minHeight: '100vh',
-    overflowX: 'hidden',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-    padding: '10px 20px',
-    borderBottom: '1px solid #ddd',
-  },
-  authButtons: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  button: {
-    marginLeft: '10px',
-    backgroundColor: '#ff9900',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    padding: '10px 20px',
-    fontSize: '16px',
-    transition: 'background-color 0.3s',
-  },
-  buttonHover: {
-    backgroundColor: '#e68a00',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    minHeight: "100vh",
+    overflowX: "hidden",
   },
   mainSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '20px',
-    backgroundColor: '#f8f9fa',
-    position: 'relative',
-    zIndex: 1,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "20px",
+    backgroundColor: "#f8f9fa",
     flex: 1,
   },
   heroText: {
     flex: 1,
-    marginRight: '20px',
+    marginRight: "20px",
   },
   heroImage: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
   },
   heroImg: {
-    maxWidth: '100%',
-    height: 'auto',
-    borderRadius: '8px',
+    maxWidth: "100%",
+    height: "auto",
+    borderRadius: "8px",
   },
   getStartedButton: {
-    backgroundColor: '#ff9900',
-    color: 'white',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: '5px',
-    fontSize: '18px',
-    padding: '10px 20px',
-    marginTop: '20px',
-    transition: 'background-color 0.3s',
+    backgroundColor: "#ff9900",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+    borderRadius: "5px",
+    fontSize: "18px",
+    padding: "10px 20px",
+    marginTop: "20px",
+    transition: "background-color 0.3s",
   },
   featuresSection: {
-    backgroundColor: '#f9fafc',
-    textAlign: 'center',
-    padding: '40px 20px',
+    backgroundColor: "#f9fafc",
+    textAlign: "center",
+    padding: "40px 20px",
   },
   featuresGrid: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: '20px',
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "20px",
   },
   featureCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    width: '300px',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, box-shadow 0.3s',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  featureCardHover: {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+    backgroundColor: "#ffffff",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    width: "300px",
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
   },
 };
 
 export default HomePageAgent;
-

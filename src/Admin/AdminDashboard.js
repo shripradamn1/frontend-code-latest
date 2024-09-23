@@ -50,19 +50,21 @@ const AdminDashboard = () => {
     try {
       await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
       setIsLoggedIn(false);
-      navigate('/login');
+      navigate('/login/admin');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
+
  
   const featureCardStyle = (isHovered) => ({
-    background: isHovered ? 'linear-gradient(135deg, #6e8efb, #a777e3)' : '#f8f9fa',
+    backgroundColor:'#f4d7d1',
+    background: isHovered ? '#5d99f6' : '#f8f9fa',
     color: isHovered ? '#fff' : '#343a40',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
     cursor: 'pointer',
-    height: '150px',
-    overflow: 'hidden',
+    height: '180px',
+    width:'600px',
     textAlign: 'center',
     marginTop: '30px',
     fontFamily: 'Georgia, "Times New Roman", Times, serif',
@@ -131,7 +133,7 @@ const AdminDashboard = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {isLoggedIn ? (
             <button style={{
-              backgroundColor: 'transparent',
+              backgroundColor: '#f4d7d1',
               border: '1px solid #dc3545',
               color: '#dc3545',
               padding: '5px 10px',
@@ -163,8 +165,8 @@ const AdminDashboard = () => {
             <div
               key={index}
               style={{
-                flex: '1 1 20%',
-                maxWidth: '20%',
+                flex: '1 1 45%', // Two cards per row
+                maxWidth: '45%',
                 boxSizing: 'border-box'
               }}
               onMouseEnter={() => setHovered(index)}
@@ -187,21 +189,20 @@ const AdminDashboard = () => {
       {/* Footer */}
       <footer style={{
         backgroundColor: '#f8f9fa',
-        padding: '10px 20px',
+        padding: '5px 0', // Reduced padding for smaller height
         textAlign: 'center',
         borderTop: '1px solid #ddd',
         width: '100%',
-        marginTop: 'auto',
         boxSizing: 'border-box'
       }}>
-        <p>© 2024 Your Company. All rights reserved.</p>
+        <p>© 2024 Ticket Support. All rights reserved.</p>
         <p>
           <a href="#" style={{ color: '#007bff', textDecoration: 'none' }}>Privacy Policy</a> |
-          <a href="#" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '10px' }}>Terms of Service</a>
+          <a href="#" style={{ color: '#007bff', textDecoration: 'none', marginLeft: '1px' }}>Terms of Service</a>
         </p>
       </footer>
     </div>
   );
 };
  
-export default AdminDashboard
+export default AdminDashboard;

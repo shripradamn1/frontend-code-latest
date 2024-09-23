@@ -7,9 +7,9 @@ const FeaturesAgent = () => {
   const isLoggedIn = true; // Replace this with actual login state logic
 
   const featuresData = [
-    // { title: 'Create Ticket', route: '/create-ticket' },
     { title: 'View Tickets', route: '/view-tickets/agent' },
     { title: 'Edit Tickets', route: '/edit-tickets/agent' },
+    { title: 'Closed Tickets', route: '/closed-tickets/agent' },
   ];
 
   const handleFeatureClick = (route) => {
@@ -21,6 +21,10 @@ const FeaturesAgent = () => {
     }
   };
 
+  const handleBackButtonClick = () => {
+    navigate(-1); 
+  };
+
   const sectionStyle = {
     padding: '50px 20px',
     backgroundColor: '#f9fafc',
@@ -29,6 +33,7 @@ const FeaturesAgent = () => {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    position: 'relative', // Add relative positioning
   };
 
   const containerStyle = {
@@ -102,6 +107,22 @@ const FeaturesAgent = () => {
     fontSize: '16px',
   };
 
+  const backButtonStyle = {
+    position: 'absolute',
+    bottom: '20px',
+    left: '20px',
+    backgroundColor: '#1abc9c',
+    color: '#fff',
+    padding: '14px 28px',
+    border: 'none',
+    borderRadius: '6px',
+    fontSize: '16px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+  };
+
   return (
     <section style={sectionStyle}>
       <div style={containerStyle}>
@@ -130,6 +151,12 @@ const FeaturesAgent = () => {
         </div>
       </div>
       {showLoginWarning && <div style={warningStyle}>Please log in to access this feature.</div>}
+      <button
+        style={backButtonStyle}
+        onClick={handleBackButtonClick}
+      >
+        Back
+      </button>
     </section>
   );
 };

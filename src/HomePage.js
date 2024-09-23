@@ -35,11 +35,20 @@ const HomePage = () => {
     }
   };
 
+  const handleGetStartedClick = () => {
+    if (isLoggedIn) {
+      navigate('/features');
+    } else {
+      setShowLoginWarning(true);
+      setTimeout(() => setShowLoginWarning(false), 3000);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
       setIsLoggedIn(false);
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -53,10 +62,9 @@ const HomePage = () => {
       minHeight: '90vh',
       width: '100%',
       overflowX: 'hidden',
-      
     },
-    signUp: { marginRight: '1rem' ,borderRadius:'12px'},
-    signIn: { marginRight: '1rem' ,borderRadius:'12px'},
+    signUp: { marginRight: '1rem', borderRadius: '12px' },
+    signIn: { marginRight: '1rem', borderRadius: '12px' },
     header: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -88,9 +96,8 @@ const HomePage = () => {
       maxWidth: '100%',
       height: 'auto',
       objectFit: 'cover',
-      maxHeight: '430px', // Added max height
+      maxHeight: '430px',
     },
-    
     loginWarning: {
       position: 'fixed',
       top: 0,
@@ -136,13 +143,7 @@ const HomePage = () => {
       border: '2px solid transparent',
       display: 'flex',
       flexDirection: 'column',
-      // alignItems: 'center', // Align children in the center horizontally
-      justifyContent: 'center', // Align children in the center vertically
-    },
-    featureCardHover: {
-      transform: 'translateY(-10px)',
-      borderColor: '',
-      backgroundColor: '#5270E9',
+      justifyContent: 'center',
     },
     footer: {
       backgroundColor: '#f1f1f1',
@@ -158,6 +159,7 @@ const HomePage = () => {
       borderRadius: '5px',
       fontSize: '16px',
       marginLeft: '1rem',
+      marginRight: '50px',
     },
   };
 
@@ -176,7 +178,7 @@ const HomePage = () => {
             <button style={styles.logoutButton} onClick={handleLogout}>Logout</button>
           ) : (
             <>
-              <button style={styles.signIn}  onClick={() => navigate('/login')}>Sign In</button>
+              <button style={styles.signIn} onClick={() => navigate('/login')}>Sign In</button>
               <button style={styles.signUp} onClick={() => navigate('/signup/user')}>Sign Up</button>
             </>
           )}
@@ -187,7 +189,7 @@ const HomePage = () => {
         <div style={styles.heroText}>
           <h1>Ticket Management</h1>
           <h3>Streamline your helpdesk</h3>
-          <button style={styles.getStartedButton} onClick={() => navigate('/features')}>Get Started</button>
+          <button style={styles.getStartedButton} onClick={handleGetStartedClick}>Get Started</button>
         </div>
         <div style={styles.heroImage}>
           <img src={backgroundImage} alt="Ticketing System Illustration" style={styles.heroImgStyle} />
@@ -202,8 +204,6 @@ const HomePage = () => {
               key={index}
               style={styles.featureCard}
               onClick={() => handleFeatureClick(feature.route)}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-10px)')}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = 'none')}
             >
               <h3>{feature.title}</h3>
               <p>{feature.description}</p>

@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import '../styles/CategoryList.css';
- 
+import Header from './Header';
+
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
     const [newCategoryName, setNewCategoryName] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [open, setOpen] = useState(false);
- 
+    const [isLoggedIn, setIsLoggedIn] = useState(true); // State to track login status
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         fetchCategories();
     }, []);
- 
+
     const fetchCategories = () => {
         axios.get('http://localhost:7000/api/categories', {
             withCredentials: true,
@@ -35,14 +40,14 @@ const CategoryList = () => {
                 setLoading(false);
             });
     };
- 
+
     const handleCreateCategory = (e) => {
         e.preventDefault();
         if (newCategoryName.trim() === '') {
             setError('Category name cannot be empty');
             return;
         }
- 
+
         axios.post('http://localhost:7000/api/categories', { name: newCategoryName }, {
             withCredentials: true,
             headers: {
@@ -60,10 +65,10 @@ const CategoryList = () => {
                 setError('Failed to create category');
             });
     };
- 
+
     const handleDeleteCategory = (id) => {
         const categoryToDelete = categories.find(category => category.id === id);
-   
+
         axios.delete(`http://localhost:7000/api/categories/${id}`, {
             withCredentials: true,
             headers: {
@@ -78,34 +83,38 @@ const CategoryList = () => {
                 setError('Failed to delete category');
             });
     };
-   
- 
+
     const handleClickOpen = () => {
         setOpen(true);
     };
- 
+
     const handleClose = () => {
         setOpen(false);
     };
- 
+
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleCreateCategory(e);
         }
     };
- 
+
+    const handleLogout = async () => {
+        try {
+          await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+          setIsLoggedIn(false);
+          navigate('/login/admin');
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      };
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
- 
+
     return (
         <div className="container">
-            <header>
-                <h1>Manage Categories</h1>
-                <Button variant="contained" color="primary" onClick={handleClickOpen} style={{ marginLeft: 'auto' }}>
-                    Create Category
-                </Button>
-            </header>
- 
+            <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+
             <main className="main-content">
                 <div className="categories-container">
                     <h2>Categories List</h2>
@@ -123,7 +132,7 @@ const CategoryList = () => {
                     </ul>
                 </div>
             </main>
- 
+
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create New Category</DialogTitle>
                 <DialogContent>
@@ -148,12 +157,8 @@ const CategoryList = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
- 
-            {/* <footer>
-                <p>© 2024 Category Management</p>
-            </footer> */}
         </div>
     );
 };
- 
+
 export default CategoryList;

@@ -20,10 +20,11 @@ const CreateTicket = () => {
       try {
         const response = await axios.get('http://localhost:7000/api/categories', {
           withCredentials: true,
-          headers: {
+          headers: {  
             'Accept': 'application/json'
           }
         });
+        console.log(response.data)
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -51,6 +52,7 @@ const CreateTicket = () => {
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
+    console.log(categoryId);
 
     axios.get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, {
       withCredentials: true,
@@ -274,7 +276,7 @@ const CreateTicket = () => {
           <li style={styles.sidebarItem}><a href="/create-ticket" style={styles.sidebarLink}>Create Ticket</a></li>
           <li style={styles.sidebarItem}><a href="/view-tickets" style={styles.sidebarLink}>View Tickets</a></li>
           <li style={styles.sidebarItem}><a href="/edit-tickets" style={styles.sidebarLink}>Edit Tickets</a></li>
-          <li style={styles.sidebarItem}><a href="/helpdesk" style={styles.sidebarLink}>Helpdesk Automation</a></li>
+          <li style={styles.sidebarItem}><a href="/" style={styles.sidebarLink}>Home</a></li>
         </ul>
       </aside>
 

@@ -8,6 +8,39 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family:Georgia, 'Times New Roman', Times, serif;
   }
+
+  .tickets-header {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .tickets-header .h1{
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .view-tickets-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .home-page-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .view-tickets-button:hover {
+    background-color: #0056b3;
+  }
+  
   
   .ticket-list {
     display: table;
@@ -36,23 +69,23 @@
   }
   
   .ticket-card .priority-high {
-    color: red;
+    color: rgb(244, 188, 188);
   }
   
   .ticket-card .priority-medium {
-    color: orange;
+    color: rgb(242, 211, 152);
   }
   
   .ticket-card .priority-low {
-    color: green;
+    color: rgb(193, 244, 193);
   }
   
   .ticket-card .status-open {
-    color: green;
+    color: rgb(180, 240, 180);
   }
   
   .ticket-card .status-closed {
-    color: red;
+    color: rgb(239, 169, 169);
   }
   
   .ticket-card .status-in-progress {
@@ -116,11 +149,11 @@
   }
   
   option[value="OPEN"] {
-    color: green;
+    color: rgb(32, 143, 32);
   }
   
   option[value="RESOLVED"] {
-    color: orange;
+    color: rgb(227, 158, 22);
   }
   
   option[value="IN_PROGRESS"] {
@@ -128,34 +161,30 @@
   }
   
   option[value="CLOSED"] {
-    color: red;
+    color: rgb(230, 23, 23);
   }
   
   option[value="LOW"] {
-    color: green;
+    color: rgb(28, 116, 28);
   }
   
   option[value="MEDIUM"] {
-    color: orange;
+    color: rgb(206, 143, 24);
   }
   
   option[value="HIGH"] {
-    color: red;
+    color: rgb(215, 23, 23);
   }
 /* Add styles for different priorities */
 /*.ticket-card.priority-high {
     background-color: red;
   }*/
   
-  .ticket-card.priority-medium {
-   
-  }
   
-  .ticket-card.priority-low {
-    background-color: green;
-  }
+  
+ 
   .ticket-card.status-open .ticket-status h3 span {
-    background-color: rgb(4, 161, 4);
+    background-color: rgb(45, 161, 45);
     padding: 5px;
     border-radius: 5px;
     font-size: 15px;
@@ -163,7 +192,7 @@
 }
     
     .ticket-card.status-resolved .ticket-status h3 span {
-        background-color: red;
+        background-color: rgb(235, 60, 60);
         padding: 5px;
         border-radius: 5px;
         font-size: 14px;

@@ -225,6 +225,7 @@ const ViewTicketsUser = () => {
             style={styles.newTicketButton}
             onClick={handleNewTicketClick}
           >
+            
             New Ticket
           </button>
           <button
