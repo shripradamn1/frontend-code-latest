@@ -263,6 +263,7 @@ const CreateTicket = () => {
       textAlign: 'center',
       marginBottom: '20px'
     }
+    
   };
 
   return (
