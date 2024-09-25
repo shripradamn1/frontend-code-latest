@@ -12,7 +12,7 @@ const ViewTicketDetails = () => {
   // Function to fetch ticket details by title
   const fetchTicketByTitle = async () => {
     try {
-      const response = await axios.get(`http://localhost:7000/api/tickets/title/${encodeURIComponent(title)}`, {
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/title/${encodeURIComponent(title)}`, {
         withCredentials: true,
       });
       setTicket(response.data);

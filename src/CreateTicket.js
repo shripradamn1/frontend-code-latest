@@ -9,7 +9,6 @@ const CreateTicket = () => {
   const [selectedTeam, setSelectedTeam] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [file, setFile] = useState(null); // State for file
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ const CreateTicket = () => {
     setSelectedCategory(categoryId);
     console.log(categoryId);
 
-    axios.get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, {
+    axios.get(process.env.REACT_APP_BACKEND_URL+`/api/teams/categories/${categoryId}/teams`, {
       withCredentials: true,
       headers: {
         'Accept': 'application/json'
@@ -88,7 +87,7 @@ const CreateTicket = () => {
           return 2;
         case 'Telecommunication Equipment Team':
           return 3;
-          default:
+        default:
           return 4;
       }
     }
@@ -98,10 +97,6 @@ const CreateTicket = () => {
   const handleTeamChange = (e) => {
     const selectedTeamName = e.target.value;
     setSelectedTeam(selectedTeamName);
-  };
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
   };
 
   const handleSubmit = (e) => {
@@ -119,11 +114,8 @@ const CreateTicket = () => {
     formData.append('description', description);
     formData.append('categoryId', selectedCategory);
     formData.append('userId', loggedInUserId);
-    if (file) {
-      formData.append('file', file); // Append file only if it exists
-    }
 
-    axios.post(`http://localhost:7000/api/tickets/${loggedInUserId}/${selectedCategory}/${teamId}`, formData, {
+    axios.post(process.env.REACT_APP_BACKEND_URL+`/api/tickets/${loggedInUserId}/${selectedCategory}/${teamId}`, formData, {
       withCredentials: true,
     })
     .then((response) => {
@@ -134,7 +126,6 @@ const CreateTicket = () => {
       setDescription('');
       setSelectedCategory('');
       setSelectedTeam('');
-      setFile(null);
       setTeams([]);
 
       navigate('/success');
@@ -189,10 +180,6 @@ const CreateTicket = () => {
       padding: '10px',
       display: 'block'
     },
-    sidebarLinkHover: {
-      backgroundColor: '#282ba3',
-      color: '#ddd'
-    },
     formContainer: {
       flex: '1',
       display: 'flex',
@@ -232,9 +219,6 @@ const CreateTicket = () => {
       resize: 'vertical',
       minHeight: '100px'
     },
-    fileInput: {
-      marginBottom: '20px'
-    },
     button: {
       padding: '10px 20px',
       fontSize: '16px',
@@ -263,7 +247,6 @@ const CreateTicket = () => {
       textAlign: 'center',
       marginBottom: '20px'
     }
-    
   };
 
   return (
@@ -317,9 +300,7 @@ const CreateTicket = () => {
           >
             <option value="">Select Category</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
+              <option key={category.id} value={category.id}>{category.name}</option>
             ))}
           </select>
 
@@ -333,22 +314,11 @@ const CreateTicket = () => {
           >
             <option value="">Select Team</option>
             {teams.map((team) => (
-              <option key={team.id} value={team.name}>
-                {team.name}
-              </option>
+              <option key={team.id} value={team.name}>{team.name}</option>
             ))}
           </select>
 
-          <label htmlFor="file" style={styles.label}>Attach File (Optional):</label>
-          <input
-            id="file"
-            type="file"
-            onChange={handleFileChange}
-            style={styles.fileInput}
-          />
-
           <button type="submit" style={{ ...styles.button, ...styles.submitButton }}>Submit</button>
-          <button type="button" onClick={() => navigate('/')} style={{ ...styles.button, ...styles.cancelButton }}>Cancel</button>
         </form>
       </div>
     </div>

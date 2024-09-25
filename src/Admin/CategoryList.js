@@ -69,7 +69,7 @@ const CategoryList = () => {
     const handleDeleteCategory = (id) => {
         const categoryToDelete = categories.find(category => category.id === id);
 
-        axios.delete(`http://localhost:7000/api/categories/${id}`, {
+        axios.delete(process.env.REACT_APP_BACKEND_URL+`/api/categories/${id}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',

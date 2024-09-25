@@ -17,7 +17,7 @@ const ViewTickets = () => {
         if (loginResponse.status === 200) {
           const username = loginResponse.data.username;
           localStorage.setItem('username', JSON.stringify(username));
-          const response = await axios.get(`http://localhost:7000/api/tickets/agent/${username}`, { withCredentials: true });
+          const response = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/agent/${username}`, { withCredentials: true });
           if (Array.isArray(response.data)) {
             setTickets(response.data);
 

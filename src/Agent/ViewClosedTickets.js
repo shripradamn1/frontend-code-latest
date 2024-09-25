@@ -17,7 +17,7 @@ const ViewClosedTickets = () => {
           localStorage.setItem('username', JSON.stringify(username));
           setIsLoggedIn(true); // Update login state
 
-          const response = await axios.get(`http://localhost:7000/api/tickets/agent/${username}`, { withCredentials: true });
+          const response = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/agent/${username}`, { withCredentials: true });
           if (Array.isArray(response.data)) {
             const filteredClosedTickets = response.data.filter(ticket => ticket.status === 'CLOSED');
             setClosedTickets(filteredClosedTickets);

@@ -179,7 +179,7 @@ const EditTickets = () => {
     if (user) {
       const fetchTickets = async () => {
         try {
-          const ticketsResponse = await axios.get(`http://localhost:7000/api/tickets/userId/${user.id}`, { withCredentials: true });
+          const ticketsResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/userId/${user.id}`, { withCredentials: true });
           setTickets(ticketsResponse.data);
         } catch (error) {
           console.error('Error fetching tickets:', error);
@@ -205,15 +205,20 @@ const EditTickets = () => {
     if (!editingTicket || updatedDescription === '') return;
 
     try {
+      //console.log( process.env.REACT_APP_BACKEND_URL+`api/tickets/${editingTicket.id}`+" "+ process.env.REACT_APP_BACKEND_URL+`/api/tickets/userId/${user.id}`)
       await axios.put(
-        `http://localhost:7000/tickets/${editingTicket.id}`,
-        { description: updatedDescription }, // Send the updated description only
+        process.env.REACT_APP_BACKEND_URL+`/api/tickets/${editingTicket.id}`,
+         updatedDescription ,{headers:{'Content-Type':'text/plain'}},
         { withCredentials: true }
       );
+      console.log(updatedDescription)
+      console.log("uId "+user.id)
       // After successful update, refresh tickets list
-      const ticketsResponse = await axios.get(`http://localhost:7000/api/tickets/userId/${user.id}`, { withCredentials: true });
+      const ticketsResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/userId/${user.id}`, { withCredentials: true });
+      
       setTickets(ticketsResponse.data);
-      setEditingTicket(null); // Close the editing state
+      setEditingTicket(null); 
+      alert('ticket is updated')// Close the editing state
     } catch (error) {
       console.error('Error updating ticket:', error);
       alert('Failed to update the ticket.');
@@ -248,8 +253,8 @@ const EditTickets = () => {
             onMouseLeave={(e) => Object.assign(e.currentTarget.style, styles.ticketCard)}
           >
             <h3 style={styles.ticketCardTitle}>{ticket.title}</h3>
-            <p style={styles.ticketCardText}>Status: {ticket.status}</p>
-            <p style={styles.ticketCardText}>Description: {ticket.description}</p>
+           
+            {/* <p style={styles.ticketCardText}>Description: {ticket.description}</p> */}
             <button
               onClick={() => handleEditClick(ticket)}
               disabled={ticket.status.toLowerCase() !== 'open'}

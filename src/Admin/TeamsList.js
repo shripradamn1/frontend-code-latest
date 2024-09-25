@@ -126,7 +126,7 @@ const CategoryComponent = () => {
 
   const handleCategoryClick = (categoryId) => {
     axios
-      .get(`http://localhost:7000/api/categories/${categoryId}`, {
+      .get(process.env.REACT_APP_BACKEND_URL+`/api/categories/${categoryId}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -140,7 +140,7 @@ const CategoryComponent = () => {
 
   const fetchTeamsByCategory = (categoryId) => {
     axios
-      .get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, {
+      .get(process.env.REACT_APP_BACKEND_URL+`/api/teams/categories/${categoryId}/teams`, {
         withCredentials: true,
       })
       .then((response) => {

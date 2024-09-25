@@ -114,55 +114,9 @@ const styles = {
     color: 'red',
     marginTop: '20px',
   },
-  viewTicketDetailsContainer: {
-    maxWidth: '800px',
-    margin: '20px auto',
-    padding: '30px',
-    backgroundColor: '#e9ecef',
-    borderRadius: '12px',
-    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-    fontFamily: 'Georgia, "Times New Roman", Times, serif',
-  },
-  ticketDetailsCard: {
-    backgroundColor: '#ffffff',
-    border: '1px solid #dcdcdc',
-    borderRadius: '10px',
-    padding: '30px',
-    margin: '20px 0',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-  },
-  ticketDetailsCardHover: {
-    transform: 'translateY(-5px)',
-    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
-  },
-  statusContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '20px',
-  },
-  statusItem: {
-    flex: '1',
-    textAlign: 'center',
-    padding: '10px',
-    backgroundColor: '#f7f7f9',
-    borderRadius: '8px',
-    margin: '0 10px',
-  },
-  statusItemTitle: {
-    margin: '0',
-    fontSize: '18px',
-    color: '#2c3e50',
-  },
-  statusItemText: {
-    margin: '5px 0 0',
-    fontSize: '14px',
-    color: '#7f8c8d',
-  },
   buttonContainer: {
     display: 'flex',
-    gap: '10px', // Adds space between buttons
+    gap: '10px',
   },
 };
 
@@ -172,9 +126,8 @@ const ViewTicketsUser = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showResolved, setShowResolved] = useState(false); // Track if showing resolved tickets
+  const [showResolved, setShowResolved] = useState(false); 
 
-  // Function to fetch all tickets for the logged-in user
   const fetchTickets = async () => {
     try {
       const loginResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', {
@@ -182,11 +135,11 @@ const ViewTicketsUser = () => {
       });
       const userId = loginResponse.data.id;
 
-      const ticketsResponse = await axios.get(`http://localhost:7000/api/tickets/userId/${userId}`, {
+      const ticketsResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/tickets/userId/${userId}`, {
         withCredentials: true,
       });
 
-      setTickets(ticketsResponse.data); // Set all tickets (both active and resolved)
+      setTickets(ticketsResponse.data); 
       setLoading(false);
     } catch (err) {
       setError('Error fetching tickets');
@@ -194,7 +147,6 @@ const ViewTicketsUser = () => {
     }
   };
 
-  // Use useEffect to fetch tickets when the component mounts
   useEffect(() => {
     fetchTickets();
   }, []);
@@ -208,10 +160,9 @@ const ViewTicketsUser = () => {
   };
 
   const handleShowResolvedClick = () => {
-    setShowResolved(!showResolved); // Toggle between active and resolved tickets
+    setShowResolved(!showResolved); 
   };
 
-  // Filter the tickets based on the resolved state
   const filteredTickets = showResolved
     ? tickets.filter(ticket => ticket.status && ticket.status.toLowerCase() === 'resolved')
     : tickets.filter(ticket => ticket.status && ticket.status.toLowerCase() !== 'resolved');
@@ -225,7 +176,6 @@ const ViewTicketsUser = () => {
             style={styles.newTicketButton}
             onClick={handleNewTicketClick}
           >
-            
             New Ticket
           </button>
           <button
@@ -275,17 +225,17 @@ const ViewTicketsUser = () => {
                       ? styles.priorityMedium
                       : ticket.priority && ticket.priority.toLowerCase() === 'low'
                       ? styles.priorityLow
-                      : {}), // Default style if priority is undefined or not recognized
+                      : {}), 
                   }}
                 >
-                  {ticket.priority || ''} {/* Display 'N/A' if priority is undefined */}
+                  {ticket.priority || ''} 
                 </span>
               </div>
               <p style={styles.ticketCardText}>
                 <strong style={styles.ticketCardTextStrong}>Status:</strong> {ticket.status}
               </p>
               <p style={styles.ticketCardText}>
-                {/* <strong style={styles.ticketCardTextStrong}>Created On:</strong> {ticket.createdOn} */}
+                <strong style={styles.ticketCardTextStrong}>Description:</strong> {ticket.description || 'No description provided.'}
               </p>
             </div>
           ))}

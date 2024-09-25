@@ -91,7 +91,7 @@ const CreateAgent = () => {
   const handleCategoryChange = (e) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
-    axios.get(`http://localhost:7000/api/teams/categories/${categoryId}/teams`, {
+    axios.get(process.env.REACT_APP_BACKEND_URL+`/api/teams/categories/${categoryId}/teams`, {
       withCredentials: true,
       headers: { 'Accept': 'application/json' },
     })
@@ -134,7 +134,7 @@ const CreateAgent = () => {
       categoryId: selectedCategory,
     };
 
-    axios.post(`http://localhost:7000/api/agents/category/${selectedCategory}/team/${selectedTeamId}`, agentData, {
+    axios.post(process.env.REACT_APP_BACKEND_URL+`/api/agents/category/${selectedCategory}/team/${selectedTeamId}`, agentData, {
       withCredentials: true,
       headers: { 'Content-Type': 'application/json' },
     })
