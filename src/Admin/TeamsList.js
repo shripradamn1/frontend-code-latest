@@ -113,7 +113,7 @@ const CategoryComponent = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:7000/api/categories', { withCredentials: true })
+      .get(process.env.REACT_APP_BACKEND_URL+'/api/categories', { withCredentials: true })
       .then((response) => {
         setCategories(response.data);
         setLoading(false);
@@ -153,7 +153,7 @@ const CategoryComponent = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
       localStorage.removeItem('username'); // Clear the username from localStorage
       navigate('/login/admin'); // Redirect to login page after logout
     } catch (error) {

@@ -17,7 +17,7 @@ const HomePage = () => {
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/checkLoggedInUser', { withCredentials: true });
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', { withCredentials: true });
         setIsLoggedIn(response.data ? true : false);
       } catch (error) {
         setIsLoggedIn(false);
@@ -46,7 +46,7 @@ const HomePage = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
       setIsLoggedIn(false);
       navigate('/');
     } catch (error) {

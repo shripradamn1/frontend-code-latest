@@ -16,7 +16,7 @@ const EditTicketsAgent = () => {
     const fetchUser = async () => {
       setLoading(true);
       try {
-        const userResponse = await axios.get('http://localhost:7000/checkLoggedInUser', { withCredentials: true });
+        const userResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', { withCredentials: true });
         setUser(userResponse.data);
       } catch (error) {
         console.error('Error fetching user:', error);

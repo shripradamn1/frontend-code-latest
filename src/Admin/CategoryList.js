@@ -20,7 +20,7 @@ const CategoryList = () => {
     }, []);
 
     const fetchCategories = () => {
-        axios.get('http://localhost:7000/api/categories', {
+        axios.get(process.env.REACT_APP_BACKEND_URL+'/api/categories', {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ const CategoryList = () => {
             return;
         }
 
-        axios.post('http://localhost:7000/api/categories', { name: newCategoryName }, {
+        axios.post(process.env.REACT_APP_BACKEND_URL+'/api/categories', { name: newCategoryName }, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const CategoryList = () => {
 
     const handleLogout = async () => {
         try {
-          await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+          await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
           setIsLoggedIn(false);
           navigate('/login/admin');
         } catch (error) {

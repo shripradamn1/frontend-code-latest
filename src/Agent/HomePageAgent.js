@@ -24,7 +24,7 @@ const HomePageAgent = () => {
     const checkLoginStatus = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/checkLoggedInUser",
+          process.env.REACT_APP_BACKEND_URL+"/checkLoggedInUser",
           { withCredentials: true }
         );
         setIsLoggedIn(response.status === 200);
@@ -46,7 +46,7 @@ const HomePageAgent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/signup",
+        process.env.REACT_APP_BACKEND_URL+"/api/signup",
         signUpData,
         { withCredentials: true }
       );
@@ -65,7 +65,7 @@ const HomePageAgent = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:7000/logout",
+        process.env.REACT_APP_BACKEND_URL+"/logout",
         {},
         { withCredentials: true }
       );

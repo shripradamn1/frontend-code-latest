@@ -76,7 +76,7 @@ const CreateAgent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:7000/api/categories', {
+    axios.get(process.env.REACT_APP_BACKEND_URL+'/api/categories', {
       withCredentials: true,
       headers: { 'Accept': 'application/json' },
     })
@@ -157,7 +157,7 @@ const CreateAgent = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
       localStorage.removeItem('username'); // Clear the username from localStorage
       navigate('/login/admin'); 
     } catch (error) {

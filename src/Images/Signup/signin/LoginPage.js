@@ -20,7 +20,7 @@ const LoginPage = () => {
       formdata.append('username', username);
       formdata.append('password', password);
 
-      const loginResponse = await axios.post('http://localhost:7000/login', formdata, {
+      const loginResponse = await axios.post(process.env.REACT_APP_BACKEND_URL+'/login', formdata, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -28,7 +28,7 @@ const LoginPage = () => {
       });
 
       if (loginResponse.status === 200) {
-        const combinedRequest = axios.get('http://localhost:7000/checkLoggedInUser', {
+        const combinedRequest = axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', {
           withCredentials: true,
         });
 

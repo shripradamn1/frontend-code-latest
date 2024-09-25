@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/checkLoggedInUser', {
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', {
           withCredentials: true,
           headers: {
             'Accept': 'application/json'
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
  
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
       setIsLoggedIn(false);
       navigate('/login/admin');
     } catch (error) {

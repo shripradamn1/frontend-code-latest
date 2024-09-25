@@ -17,7 +17,7 @@ const AgentSignUpPage = () => {
       const userData = { username, password, email };
 
       try {
-        const response = await fetch('http://localhost:7000/signup/agent', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/signup/agent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(userData),

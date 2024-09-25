@@ -18,7 +18,7 @@ const CreateTicket = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/api/categories', {
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/api/categories', {
           withCredentials: true,
           headers: {  
             'Accept': 'application/json'
@@ -33,7 +33,7 @@ const CreateTicket = () => {
 
     const checkLoggedInUser = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/checkLoggedInUser', {
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', {
           withCredentials: true,
           headers: {
             'Accept': 'application/json'

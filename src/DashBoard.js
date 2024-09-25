@@ -1,8 +1,7 @@
 import React from 'react';
-import './TicketSystem.css'; // CSS file
-import ticketImage from './path/to/your/image.png'; // Replace with your image path
 
-const TicketSystem = () => {
+
+const DashBoard = () => {
   return (
     <div className="ticket-system-container">
       {/* Left Section */}
@@ -14,7 +13,7 @@ const TicketSystem = () => {
           you need to resolve issues and also allows you to prioritize, track,
           and automate routine support tasks.
         </p>
-        <img src={ticketImage} alt="Support Illustration" className="ticket-image" />
+       
       </div>
 
       {/* Right Section */}
@@ -33,4 +32,4 @@ const TicketSystem = () => {
   );
 };
 
-export default TicketSystem;
+export default DashBoard;

@@ -11,7 +11,7 @@ const ViewClosedTickets = () => {
   useEffect(() => {
     const fetchClosedTickets = async () => {
       try {
-        const loginResponse = await axios.get('http://localhost:7000/checkLoggedInUser', { withCredentials: true });
+        const loginResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', { withCredentials: true });
         if (loginResponse.status === 200) {
           const username = loginResponse.data.username;
           localStorage.setItem('username', JSON.stringify(username));

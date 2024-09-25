@@ -11,7 +11,7 @@ const ViewAgents = () => {
 
   useEffect(() => {
     // Fetch agents with credentials (session or cookies)
-    axios.get('http://localhost:7000/api/agents/agents', { withCredentials: true })
+    axios.get(process.env.REACT_APP_BACKEND_URL+'/api/agents/agents', { withCredentials: true })
       .then(response => {
         // Ensure response data is an array
         if (Array.isArray(response.data)) {
@@ -28,7 +28,7 @@ const ViewAgents = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:7000/logout', {}, { withCredentials: true });
+      await axios.post(process.env.REACT_APP_BACKEND_URL+'/logout', {}, { withCredentials: true });
       localStorage.removeItem('username'); // Clear the username from localStorage
       navigate('/login/admin'); // Redirect to login page after logout
     } catch (error) {

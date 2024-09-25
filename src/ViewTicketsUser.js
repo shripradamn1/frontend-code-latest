@@ -177,7 +177,7 @@ const ViewTicketsUser = () => {
   // Function to fetch all tickets for the logged-in user
   const fetchTickets = async () => {
     try {
-      const loginResponse = await axios.get('http://localhost:7000/checkLoggedInUser', {
+      const loginResponse = await axios.get(process.env.REACT_APP_BACKEND_URL+'/checkLoggedInUser', {
         withCredentials: true,
       });
       const userId = loginResponse.data.id;
