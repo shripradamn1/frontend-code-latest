@@ -247,9 +247,9 @@ const EditTicketsAgent = () => {
                     style={{ padding: '8px', borderRadius: '4px', width: '100%', marginTop: '5px' }}
                   >
                     <option value="Not Assigned">Not Assigned</option>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
+                    <option value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HIGH">High</option>
                   </select>
                 </div>
 

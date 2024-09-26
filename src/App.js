@@ -23,7 +23,8 @@ import AdminDashboard from './Admin/AdminDashboard'
 import SuccessPage from './Success';
 import FeaturesAgent from './Agent/FeaturesAgent';
 import ViewClosedTickets from './Agent/ViewClosedTickets';
-
+import FeedbackForm from './FeedbackForm';
+import ThankYou from './ThankYou';
 function App() {
   return (
     <div className="App">
@@ -39,6 +40,8 @@ function App() {
           <Route path="/ticket-details/:title" element={<ViewTicketDetails />} />
           <Route path="/view-tickets" element={<ViewTicketsUser/>} />
           <Route path="/edit-tickets" element={<EditTickets/>} />
+          <Route path="/feedback/:ticketId" element={<FeedbackForm/>} />
+          <Route path="/ThankYou" element={<ThankYou/>} />
 
           {/* agent part */}
           <Route path="/signup/agent" element={<AgentSignUpPage />} />
